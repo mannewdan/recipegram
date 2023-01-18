@@ -1,9 +1,16 @@
+import React from "react";
+import useSearch from "./hooks/useSearch";
+
 function App() {
+  const { search, isGathering, recipes } = useSearch();
+
+  React.useEffect(() => {
+    search("apple");
+  }, []);
+
   return (
     <div>
-      <h1>h1</h1>
-      <h3>h3</h3>
-      <p>p</p>
+      <h1>{"" + isGathering}</h1>
     </div>
   );
 }
