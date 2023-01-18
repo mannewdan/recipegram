@@ -8,6 +8,8 @@ function App() {
     search("apple");
   }, []);
 
+  console.log(recipes);
+
   return (
     <div>
       <h1>{"" + isGathering}</h1>

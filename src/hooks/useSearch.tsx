@@ -1,12 +1,18 @@
 import React from "react";
 
 const apiKey = "d8b1a12242b6478da2b4e77b09ca165c";
+//set true to block api calls beyond the first
+const DEBUG_LIMITED_REQUESTS = true;
 
 type Recipe = {
   name: string;
   description: string;
-  ingredients: Ingredient[];
-  instructions: Instruction[];
+  ingredients: string[];
+  instructions?: Instruction[];
+
+  imageURL: string;
+  sourceName: string;
+  sourceURL: string;
 
   prepMinutes?: number;
   cookMinutes?: number;
@@ -16,18 +22,20 @@ type Instruction = {
   number: number;
   step: string;
 };
-type Ingredient = {
-  count: number;
-  name: string;
-};
 
 export default function useSearch() {
   const [isGathering, setIsGathering] = React.useState(false);
   const [query, setQuery] = React.useState("");
   const [sort, setSort] = React.useState("popularity"); //'time', 'random'
   const [recipes, setRecipes] = React.useState<Recipe[]>([]);
+  const [tempData, setTempData] = React.useState({ results: undefined });
 
   function search(query: string, sort: string = "popularity") {
+    if (DEBUG_LIMITED_REQUESTS && tempData.results) {
+      setRecipes(buildRecipes(tempData.results));
+      return;
+    }
+
     setQuery(query);
     setSort(sort);
     setIsGathering(true);
@@ -43,8 +51,11 @@ export default function useSearch() {
           //daily limit reached
           console.log("Failed to retrieve data from API: " + data.message);
         } else {
-          //convert data array into an array of recipes
+          setTempData(data);
           console.log(data);
+
+          //convert data array into an array of recipes
+          setRecipes(buildRecipes(data.results));
         }
       })
       .catch((error) => {
@@ -52,6 +63,47 @@ export default function useSearch() {
         console.log("Failed to retrieve data from API: " + error);
       });
   }
+  function buildRecipes(results: any[]): Array<Recipe> {
+    return results.map((result) => {
+      //get ingredients
+      const ingredients = result.extendedIngredients.map((item: any) => {
+        return item.original;
+      }) as string[];
 
-  return { search, isGathering, recipes };
+      //get instructions
+      let instructions = undefined;
+      if (
+        result.analyzedInstructions &&
+        result.analyzedInstructions.length > 0
+      ) {
+        instructions = result.analyzedInstructions[0].steps.map((step: any) => {
+          return {
+            number: step.number,
+            step: step.step,
+          } as Instruction;
+        }) as Instruction[];
+      }
+
+      //build recipe
+      return {
+        name: result.title,
+        description: result.summary,
+        ingredients: ingredients,
+        instructions: instructions,
+
+        imageURL: result.image,
+        sourceName: result.sourceName,
+        sourceURL: result.sourceUrl,
+
+        prepMinutes:
+          result.preparationMinutes > 0 ? result.preparationMinutes : undefined,
+        cookMinutes:
+          result.cookingMinutes > 0 ? result.cookingMinutes : undefined,
+        totalMinutes:
+          result.readyInMinutes > 0 ? result.readyInMinutes : undefined,
+      } as Recipe;
+    }) as Recipe[];
+  }
+
+  return { search, isGathering, query, sort, recipes };
 }
