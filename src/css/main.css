@@ -1,0 +1,25 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  font-family: "Rubik", sans-serif;
+  font-weight: 400;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+h1,
+h2,
+h3 {
+  font-family: "Karla", sans-serif;
+  font-weight: 700;
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}/*# sourceMappingURL=main.css.map */
