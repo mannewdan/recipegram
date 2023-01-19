@@ -1,18 +1,12 @@
-import React from "react";
-import useSearch from "./hooks/useSearch";
+import { Routes, Route } from "react-router-dom";
+import Search from "./pages/Search";
 
 function App() {
-  const { search, isGathering, recipes } = useSearch();
-
-  React.useEffect(() => {
-    search("apple");
-  }, []);
-
-  console.log(recipes);
-
   return (
     <div>
-      <h1>{"" + isGathering}</h1>
+      <Routes>
+        <Route path="/" element={<Search />}></Route>
+      </Routes>
     </div>
   );
 }

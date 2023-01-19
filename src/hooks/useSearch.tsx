@@ -1,8 +1,7 @@
 import React from "react";
 
 const apiKey = "d8b1a12242b6478da2b4e77b09ca165c";
-//set true to block api calls beyond the first
-const DEBUG_LIMITED_REQUESTS = true;
+const resultsCount = 10;
 
 type Recipe = {
   name: string;
@@ -28,20 +27,14 @@ export default function useSearch() {
   const [query, setQuery] = React.useState("");
   const [sort, setSort] = React.useState("popularity"); //'time', 'random'
   const [recipes, setRecipes] = React.useState<Recipe[]>([]);
-  const [tempData, setTempData] = React.useState({ results: undefined });
 
   function search(query: string, sort: string = "popularity") {
-    if (DEBUG_LIMITED_REQUESTS && tempData.results) {
-      setRecipes(buildRecipes(tempData.results));
-      return;
-    }
-
     setQuery(query);
     setSort(sort);
     setIsGathering(true);
 
     fetch(
-      `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&query=${query}&instructionsRequired=true&addRecipeInformation=true&fillIngredients=true&number=3&sort=${sort}`
+      `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&query=${query}&instructionsRequired=true&addRecipeInformation=true&fillIngredients=true&number=${resultsCount}&sort=${sort}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -51,7 +44,6 @@ export default function useSearch() {
           //daily limit reached
           console.log("Failed to retrieve data from API: " + data.message);
         } else {
-          setTempData(data);
           console.log(data);
 
           //convert data array into an array of recipes
