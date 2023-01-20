@@ -1,0 +1,10 @@
+$black: hsl(0, 0%, 16%);
+$white: hsl(0, 0%, 96%);
+
+$accent: #546de5;
+$accent-light: #778aeb;
+
+::selection {
+  color: $white;
+  background-color: $accent;
+}

@@ -1,3 +1,5 @@
+@use "../globals/themes" as *;
+
 * {
   box-sizing: border-box;
 }
@@ -5,20 +7,30 @@
 :root {
   font-family: "Rubik", sans-serif;
   font-weight: 400;
+  color: $black;
 }
 
 body {
   margin: 0;
   padding: 0;
+  background-color: $white;
 }
 
 h1,
 h2,
-h3 {
+h3,
+h4 {
   font-family: "Karla", sans-serif;
   font-weight: 700;
   margin: 0;
 }
+
 p {
   margin: 0;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0 0 0 1.25em;
 }

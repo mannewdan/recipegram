@@ -9,17 +9,38 @@ export default function Search() {
 
   const recipeEls = recipes.map((r) => {
     return (
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          maxWidth: "400px",
-          marginBottom: "20px",
-        }}
-      >
-        <h3>{r.name}</h3>
-        <span>From {r.sourceName}</span>
+      <div key={r.id} className="recipe">
+        <div className="recipe__title">
+          <h3>{r.name}</h3>
+        </div>
+
         <img src={r.imageURL}></img>
+
+        <div className="recipe__details">
+          <div className="recipe__details--ingredients">
+            <h4>Ingredients</h4>
+            <ul>
+              {r.ingredients.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="recipe__details--instructions">
+            <h4>Instructions</h4>
+            {r.instructions && (
+              <ol>
+                {r.instructions.map((item) => (
+                  <li>{item.step}</li>
+                ))}
+              </ol>
+            )}
+
+            {!r.instructions && (
+              <p>No instructions provided. Figure it out yourself!</p>
+            )}
+          </div>
+        </div>
       </div>
     );
   });
@@ -41,7 +62,7 @@ export default function Search() {
       <br></br>
 
       {isGathering && <span>Searching...</span>}
-      {!isGathering && recipeEls}
+      {!isGathering && <div className="recipe-container">{recipeEls}</div>}
     </div>
   );
 }

@@ -4,14 +4,13 @@ const apiKey = "d8b1a12242b6478da2b4e77b09ca165c";
 const resultsCount = 10;
 
 type Recipe = {
+  id: string;
   name: string;
   description: string;
   ingredients: string[];
   instructions?: Instruction[];
 
   imageURL: string;
-  sourceName: string;
-  sourceURL: string;
 
   prepMinutes?: number;
   cookMinutes?: number;
@@ -78,6 +77,7 @@ export default function useSearch() {
 
       //build recipe
       return {
+        id: "r" + result.id,
         name: result.title,
         description: result.summary,
         ingredients: ingredients,
