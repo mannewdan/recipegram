@@ -20,8 +20,17 @@ export default function Search() {
         <img src={r.imageURL}></img>
 
         <div className="recipe__details">
-          <div className="recipe__details--ingredients">
-            <h4>Ingredients</h4>
+          <div>
+            <div className="recipe__details--top">
+              <h4>Ingredients</h4>
+              <div className="recipe__buttons">
+                <button>F</button>
+                <button>C</button>
+                <button>L</button>
+                <span>3.1k</span>
+              </div>
+            </div>
+
             <ul>
               {r.ingredients.map((item) => (
                 <li>{item}</li>
@@ -29,7 +38,7 @@ export default function Search() {
             </ul>
           </div>
 
-          <div className="recipe__details--instructions">
+          <div>
             <h4>Instructions</h4>
             {r.instructions && (
               <ol>
@@ -43,6 +52,16 @@ export default function Search() {
               <p>No instructions provided. Figure it out yourself!</p>
             )}
           </div>
+        </div>
+
+        <div className="recipe__comments">
+          <button className="recipe__comments--view-comments">
+            View 1 comment
+          </button>
+          <form className="recipe__comments--reply-bar">
+            <input type="text" placeholder="Add a comment..."></input>
+            <button>Post</button>
+          </form>
         </div>
       </div>
     );

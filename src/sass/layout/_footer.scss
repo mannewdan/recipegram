@@ -1,0 +1,25 @@
+@use "../globals/themes" as *;
+
+$footer-height: 50px;
+
+main {
+  min-height: calc(100vh - $footer-height);
+}
+
+footer {
+  font-size: 0.8rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+
+  height: $footer-height;
+  background-color: $white;
+  box-shadow: 0 0 4px hsl(0, 0%, 0%, 30%);
+
+  a {
+    text-decoration: none;
+    color: darken($white-gray, 15%);
+  }
+}
