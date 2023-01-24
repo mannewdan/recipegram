@@ -11,7 +11,6 @@ $search-height: 135px;
   width: 100%;
   height: $search-height;
 
-  position: fixed;
   box-shadow: 0px 1px 2px hsl(0, 0%, 0%, 50%);
 
   display: flex;
@@ -54,6 +53,11 @@ $search-height: 135px;
       font-weight: 700;
       text-shadow: 0 0 4px $black;
       background-color: $accent-secondary;
+      transition: background-color 100ms;
+
+      &:hover {
+        background-color: lighten($accent-secondary, 5%);
+      }
     }
   }
 

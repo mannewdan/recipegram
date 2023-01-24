@@ -1,12 +1,14 @@
 import React from "react";
 import useSearch from "../hooks/useSearch";
+import useStickyScroll from "../hooks/useStickyScroll";
 
 export default function Search() {
   const { search, isGathering, recipes } = useSearch();
   const [query, setQuery] = React.useState("");
   const [sortSelection, setSortSelection] = React.useState("popularity");
 
-  console.log(recipes);
+  const { positionMode, positionOffset, transitionSpeed } =
+    useStickyScroll(135);
 
   const recipeEls = recipes.map((r) => {
     return (
@@ -49,7 +51,14 @@ export default function Search() {
   return (
     <div>
       <div className="search-container">
-        <div className="search">
+        <div
+          style={{
+            position: positionMode === "fixed" ? "fixed" : "unset",
+            transform: `translateY(${positionOffset}px)`,
+            transition: `transform ${transitionSpeed}ms`,
+          }}
+          className={"search"}
+        >
           <h1>Find Recipes</h1>
           <div className="search__bar">
             <input
@@ -70,7 +79,7 @@ export default function Search() {
                 name="sort"
                 value="popularity"
                 onClick={() => setSortSelection("popularity")}
-                checked={sortSelection === "popularity"}
+                defaultChecked={sortSelection === "popularity"}
               ></input>
               <label htmlFor="popularity">Most Popular</label>
             </div>
@@ -81,7 +90,7 @@ export default function Search() {
                 name="sort"
                 value="time"
                 onClick={() => setSortSelection("time")}
-                checked={sortSelection === "time"}
+                defaultChecked={sortSelection === "time"}
               ></input>
               <label htmlFor="time">Most Recent</label>
             </div>
@@ -92,7 +101,7 @@ export default function Search() {
                 name="sort"
                 value="random"
                 onClick={() => setSortSelection("random")}
-                checked={sortSelection === "random"}
+                defaultChecked={sortSelection === "random"}
               ></input>
               <label htmlFor="random">Random</label>
             </div>

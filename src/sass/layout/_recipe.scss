@@ -29,7 +29,8 @@
     font-size: 1.5rem;
     margin-bottom: 10px;
     color: $white;
-    background-color: $accent;
+    background-color: $accent-secondary;
+    text-shadow: 0 0 4px hsl(0, 0%, 0%, 50%);
     padding: 6px 12px;
     border-radius: 6px;
   }
