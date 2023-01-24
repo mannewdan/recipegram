@@ -1,11 +1,11 @@
 ::-moz-selection {
   color: hsl(0deg, 0%, 96%);
-  background-color: #546de5;
+  background-color: #778aeb;
 }
 
 ::selection {
   color: hsl(0deg, 0%, 96%);
-  background-color: #546de5;
+  background-color: #778aeb;
 }
 
 * {

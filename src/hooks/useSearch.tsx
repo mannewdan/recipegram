@@ -1,7 +1,7 @@
 import React from "react";
 
 const apiKey = "d8b1a12242b6478da2b4e77b09ca165c";
-const resultsCount = 10;
+const resultsCount = 20;
 
 type Recipe = {
   id: string;
