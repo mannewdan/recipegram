@@ -15,13 +15,14 @@
 :root {
   font-family: "Rubik", sans-serif;
   font-weight: 400;
-  color: hsl(0deg, 0%, 16%);
+  color: hsl(0deg, 0%, 18%);
+  font-size: 14px;
 }
 
 body {
   margin: 0;
   padding: 0;
-  background-color: hsl(0deg, 0%, 94%);
+  background-color: hsl(0deg, 0%, 97%);
 }
 
 h1,
@@ -41,6 +42,7 @@ ul,
 ol {
   margin: 0;
   padding: 0 0 0 1.25em;
+  line-height: 1.5;
 }
 
 .recipe-container {
@@ -64,8 +66,8 @@ ol {
 }
 .recipe__title {
   font-size: 1.25rem;
-  color: hsl(0deg, 0%, 16%);
-  padding: 10px 16px;
+  color: hsl(0deg, 0%, 18%);
+  padding: 10px;
   border-radius: 6px;
 }
 .recipe img {
@@ -143,7 +145,7 @@ ol {
   cursor: pointer;
 }
 .recipe__comments--reply-bar button.clickable:hover {
-  color: hsl(0deg, 0%, 16%);
+  color: hsl(0deg, 0%, 18%);
 }
 
 .search-container {
@@ -165,7 +167,7 @@ ol {
 }
 .search h1 {
   color: hsl(0deg, 0%, 100%);
-  text-shadow: 0 0 3px hsl(0deg, 0%, 16%);
+  text-shadow: 0 0 3px hsl(0deg, 0%, 18%);
 }
 .search__bar {
   display: flex;
@@ -189,7 +191,7 @@ ol {
 .search__bar button {
   color: white;
   font-weight: 700;
-  text-shadow: 0 0 4px hsl(0deg, 0%, 16%);
+  text-shadow: 0 0 4px hsl(0deg, 0%, 18%);
   background-color: #f5cd79;
   transition: background-color 100ms;
 }
@@ -220,5 +222,5 @@ footer {
 }
 footer a {
   text-decoration: none;
-  color: #c9c9c9;
+  color: #d1d1d1;
 }/*# sourceMappingURL=main.css.map */
