@@ -25,6 +25,10 @@ body {
   background-color: hsl(0deg, 0%, 97%);
 }
 
+main {
+  min-height: calc(100vh - 50px);
+}
+
 h1,
 h2,
 h3,
@@ -121,7 +125,7 @@ ol {
   justify-content: center;
   align-items: center;
   max-width: 500px;
-  margin: 0 auto;
+  margin: 16px auto 0 auto;
   padding: 0 10px;
 }
 
@@ -129,7 +133,7 @@ ol {
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
   border: 1px solid hsl(0deg, 0%, 80%);
   border-radius: 6px;
   background-color: hsl(0deg, 0%, 100%);
@@ -217,7 +221,15 @@ ol {
 .search-container {
   position: relative;
   height: 135px;
-  margin-bottom: 16px;
+}
+
+.search-indicator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 135px - 50px);
+  font-size: 1.25rem;
+  color: hsl(0deg, 0%, 80%);
 }
 
 .search {
@@ -271,10 +283,6 @@ ol {
   align-items: center;
   gap: 10px;
   color: hsl(0deg, 0%, 100%);
-}
-
-main {
-  min-height: calc(100vh - 50px);
 }
 
 footer {

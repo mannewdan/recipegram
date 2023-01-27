@@ -1,4 +1,5 @@
 @use "../globals/themes" as *;
+@use "../globals/sizes" as *;
 
 * {
   box-sizing: border-box;
@@ -15,6 +16,10 @@ body {
   margin: 0;
   padding: 0;
   background-color: $white-gray;
+}
+
+main {
+  min-height: calc(100vh - $footer-height);
 }
 
 h1,
