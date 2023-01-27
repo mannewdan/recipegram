@@ -29,9 +29,9 @@ export default function Recipe({ recipe }: RecipeProps) {
         {cookText && prepText && (
           <div>
             <span className="recipe__prep-time unselectable">
-              {"Cook Time: " + cookText}
-              <br></br>
               {"Prep Time: " + prepText}
+              <br></br>
+              {"Cook Time: " + cookText}
             </span>
           </div>
         )}

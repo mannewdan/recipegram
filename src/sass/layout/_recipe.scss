@@ -54,10 +54,6 @@
     background-color: $accent-light;
     border-radius: 6px;
     box-shadow: 0 0 4px hsl(0, 0%, 0%, 75%);
-
-    &:nth-of-type(2) {
-      bottom: 48px;
-    }
   }
 
   &__details {
