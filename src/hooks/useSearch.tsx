@@ -3,7 +3,7 @@ import React from "react";
 const apiKey = "d8b1a12242b6478da2b4e77b09ca165c";
 const resultsCount = 20;
 
-type Recipe = {
+export type Recipe = {
   id: string;
   name: string;
   description: string;
@@ -16,7 +16,7 @@ type Recipe = {
   cookMinutes?: number;
   totalMinutes?: number;
 };
-type Instruction = {
+export type Instruction = {
   number: number;
   step: string;
 };

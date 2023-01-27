@@ -41,8 +41,78 @@ p {
 ul,
 ol {
   margin: 0;
-  padding: 0 0 0 1.25em;
+  padding: 0 0 0 1.5em;
   line-height: 1.5;
+}
+
+.icon-button {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 35px;
+  height: 35px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.icon-button:hover :not(.pulse) {
+  opacity: 70%;
+}
+
+.icon {
+  font-size: 0rem;
+  position: absolute;
+  color: #545454;
+}
+.icon.instant {
+  font-size: 1.75rem;
+}
+.icon.pulse {
+  -webkit-animation-name: pulse;
+          animation-name: pulse;
+  -webkit-animation-duration: 150ms;
+          animation-duration: 150ms;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+  -webkit-animation-timing-function: ease-out;
+          animation-timing-function: ease-out;
+}
+.icon.fa-solid.fa-star {
+  color: hsl(40deg, 100%, 60%);
+}
+.icon.fa-solid.fa-heart {
+  color: hsl(0deg, 84%, 64%);
+}
+
+@-webkit-keyframes pulse {
+  0% {
+    font-size: 1.5rem;
+  }
+  50% {
+    font-size: 2.25rem;
+  }
+  100% {
+    font-size: 1.75rem;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    font-size: 1.5rem;
+  }
+  50% {
+    font-size: 2.25rem;
+  }
+  100% {
+    font-size: 1.75rem;
+  }
+}
+.unselectable {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 .recipe-container {
@@ -97,10 +167,6 @@ ol {
   display: flex;
   align-items: center;
   gap: 5px;
-}
-.recipe__buttons button {
-  width: 40px;
-  height: 40px;
 }
 .recipe__comments--view-comments {
   border: none;
@@ -164,6 +230,7 @@ ol {
   align-items: center;
   gap: 12px;
   background-color: #546de5;
+  z-index: 100;
 }
 .search h1 {
   color: hsl(0deg, 0%, 100%);

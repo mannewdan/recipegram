@@ -1,72 +1,18 @@
 import React from "react";
 import useSearch from "../hooks/useSearch";
 import useStickyScroll from "../hooks/useStickyScroll";
+import Recipe from "../components/Recipe";
 
 export default function Search() {
   const { search, isGathering, recipes } = useSearch();
   const [query, setQuery] = React.useState("");
   const [sortSelection, setSortSelection] = React.useState("popularity");
-
   const { positionMode, positionOffset, transitionSpeed } =
     useStickyScroll(135);
 
   const recipeEls = recipes.map((r) => {
-    return (
-      <div key={r.id} className="recipe">
-        <div className="recipe__title">
-          <h3>{r.name}</h3>
-        </div>
-
-        <img src={r.imageURL}></img>
-
-        <div className="recipe__details">
-          <div>
-            <div className="recipe__details--top">
-              <h4>Ingredients</h4>
-              <div className="recipe__buttons">
-                <button>F</button>
-                <button>C</button>
-                <button>L</button>
-                <span>3.1k</span>
-              </div>
-            </div>
-
-            <ul>
-              {r.ingredients.map((item) => (
-                <li>{item}</li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h4>Instructions</h4>
-            {r.instructions && (
-              <ol>
-                {r.instructions.map((item) => (
-                  <li>{item.step}</li>
-                ))}
-              </ol>
-            )}
-
-            {!r.instructions && (
-              <p>No instructions provided. Figure it out yourself!</p>
-            )}
-          </div>
-        </div>
-
-        <div className="recipe__comments">
-          <button className="recipe__comments--view-comments">
-            View 1 comment
-          </button>
-          <form className="recipe__comments--reply-bar">
-            <input type="text" placeholder="Add a comment..."></input>
-            <button>Post</button>
-          </form>
-        </div>
-      </div>
-    );
+    return <Recipe key={r.id} recipe={r} />;
   });
-
   return (
     <div>
       <div className="search-container">

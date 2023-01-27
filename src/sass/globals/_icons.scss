@@ -1,0 +1,53 @@
+@use "../globals/themes" as *;
+
+.icon-button {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 35px;
+  height: 35px;
+  background: none;
+  border: none;
+  cursor: pointer;
+
+  &:hover :not(.pulse) {
+    opacity: 70%;
+  }
+}
+
+.icon {
+  font-size: 0rem;
+  position: absolute;
+  color: lighten($black, 15%);
+
+  &.instant {
+    font-size: 1.75rem;
+  }
+  &.pulse {
+    animation-name: pulse;
+    animation-duration: 150ms;
+    animation-fill-mode: forwards;
+    animation-timing-function: ease-out;
+  }
+
+  &.fa-solid.fa-star {
+    color: $yellow-star;
+  }
+  &.fa-solid.fa-heart {
+    color: $red-heart;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    font-size: 1.5rem;
+  }
+  50% {
+    font-size: 2.25rem;
+  }
+  100% {
+    font-size: 1.75rem;
+  }
+}
