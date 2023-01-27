@@ -5,13 +5,43 @@ type RecipeProps = {
 };
 
 export default function Recipe({ recipe }: RecipeProps) {
+  function timeText(minutes: number) {
+    return minutes < 60
+      ? minutes + " mins"
+      : Math.round(minutes / 60) +
+          " hr" +
+          (Math.round(minutes / 60) > 1 ? "s" : "");
+  }
+
+  const cookText = recipe.cookMinutes ? timeText(recipe.cookMinutes) : null;
+  const prepText = recipe.prepMinutes ? timeText(recipe.prepMinutes) : null;
+  const totalText = recipe.totalMinutes ? timeText(recipe.totalMinutes) : null;
+
   return (
     <div key={recipe.id} className="recipe">
       <div className="recipe__title">
         <h3>{recipe.name}</h3>
       </div>
 
-      <img src={recipe.imageURL}></img>
+      <div className="img-container">
+        <img src={recipe.imageURL}></img>
+
+        {cookText && prepText && (
+          <div>
+            <span className="recipe__prep-time unselectable">
+              {"Cook Time: " + cookText}
+              <br></br>
+              {"Prep Time: " + prepText}
+            </span>
+          </div>
+        )}
+
+        {(!cookText || !prepText) && totalText && (
+          <div>
+            <span className="recipe__prep-time unselectable">{totalText}</span>
+          </div>
+        )}
+      </div>
 
       <div className="recipe__details">
         <div>
