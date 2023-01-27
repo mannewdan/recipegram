@@ -7,7 +7,7 @@ type SearchBarProps = {
 
 export default function SearchBar({ search }: SearchBarProps) {
   const [query, setQuery] = React.useState("");
-  const [sortSelection, setSortSelection] = React.useState("popularity");
+  const [sortSelection, setSortSelection] = React.useState("random");
   const { positionMode, positionOffset, transitionSpeed } =
     useStickyScroll(135);
 
@@ -37,6 +37,17 @@ export default function SearchBar({ search }: SearchBarProps) {
           <div>
             <input
               type="radio"
+              id="random"
+              name="sort"
+              value="random"
+              onClick={() => setSortSelection("random")}
+              defaultChecked={sortSelection === "random"}
+            ></input>
+            <label htmlFor="random">Random</label>
+          </div>
+          <div>
+            <input
+              type="radio"
               id="popularity"
               name="sort"
               value="popularity"
@@ -55,17 +66,6 @@ export default function SearchBar({ search }: SearchBarProps) {
               defaultChecked={sortSelection === "time"}
             ></input>
             <label htmlFor="time">Most Recent</label>
-          </div>
-          <div>
-            <input
-              type="radio"
-              id="random"
-              name="sort"
-              value="random"
-              onClick={() => setSortSelection("random")}
-              defaultChecked={sortSelection === "random"}
-            ></input>
-            <label htmlFor="random">Random</label>
           </div>
         </form>
       </div>
