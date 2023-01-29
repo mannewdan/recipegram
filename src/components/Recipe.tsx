@@ -1,3 +1,6 @@
+import { useDataContext } from "../context/DataContext";
+import { UserDataStatus } from "../context/DataContext";
+
 export type RecipeT = {
   id: string;
   name: string;
@@ -20,6 +23,9 @@ type RecipeProps = {
 };
 
 export default function Recipe({ recipe }: RecipeProps) {
+  const { toggleUserRecipeStatus, isUserRecipeStatusPositive } =
+    useDataContext();
+
   function timeText(minutes: number) {
     return minutes < 60
       ? minutes + " mins"
@@ -31,6 +37,12 @@ export default function Recipe({ recipe }: RecipeProps) {
   const cookText = recipe.cookMinutes ? timeText(recipe.cookMinutes) : null;
   const prepText = recipe.prepMinutes ? timeText(recipe.prepMinutes) : null;
   const totalText = recipe.totalMinutes ? timeText(recipe.totalMinutes) : null;
+
+  const liked = isUserRecipeStatusPositive(recipe.id, UserDataStatus.Like);
+  const favorited = isUserRecipeStatusPositive(
+    recipe.id,
+    UserDataStatus.Favorite
+  );
 
   return (
     <div key={recipe.id} className="recipe">
@@ -63,27 +75,39 @@ export default function Recipe({ recipe }: RecipeProps) {
           <div className="recipe__details--top">
             <h4>Ingredients</h4>
             <div className="recipe__buttons">
-              <button className="icon-button">
+              <button
+                onClick={() => {
+                  toggleUserRecipeStatus(recipe.id, UserDataStatus.Favorite);
+                }}
+                className="icon-button"
+              >
                 <i
                   className={`icon fa-regular fa-star ${
-                    false ? "instant" : ""
+                    !favorited ? "instant" : ""
                   }`}
                 ></i>
                 <i
-                  className={`icon fa-solid fa-star ${true ? "pulse" : ""}`}
+                  className={`icon fa-solid fa-star ${
+                    favorited ? "pulse" : ""
+                  }`}
                 ></i>
               </button>
               <button className="icon-button">
                 <i className={`icon fa-regular fa-comment instant`}></i>
               </button>
-              <button className="icon-button">
+              <button
+                onClick={() => {
+                  toggleUserRecipeStatus(recipe.id, UserDataStatus.Like);
+                }}
+                className="icon-button"
+              >
                 <i
                   className={`icon fa-regular fa-heart ${
-                    false ? "instant" : ""
+                    !liked ? "instant" : ""
                   }`}
                 ></i>
                 <i
-                  className={`icon fa-solid fa-heart ${true ? "pulse" : ""}`}
+                  className={`icon fa-solid fa-heart ${liked ? "pulse" : ""}`}
                 ></i>
               </button>
               <span className="unselectable">3.1k</span>
