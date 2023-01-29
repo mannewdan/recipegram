@@ -1,4 +1,5 @@
 import React from "react";
+import { useDataContext } from "../context/DataContext";
 import useStickyScroll from "../hooks/useStickyScroll";
 
 type SearchBarProps = {
@@ -10,6 +11,9 @@ export default function SearchBar({ search }: SearchBarProps) {
   const [sortSelection, setSortSelection] = React.useState("random");
   const { positionMode, positionOffset, transitionSpeed } =
     useStickyScroll(135);
+
+  const { value } = useDataContext();
+  console.log(value);
 
   return (
     <div className="search-container">

@@ -76,8 +76,8 @@ export default function Recipe({ recipe }: RecipeProps) {
           </div>
 
           <ul>
-            {recipe.ingredients.map((item) => (
-              <li>{item}</li>
+            {recipe.ingredients.map((item, index) => (
+              <li key={index}>{item}</li>
             ))}
           </ul>
         </div>
@@ -86,8 +86,8 @@ export default function Recipe({ recipe }: RecipeProps) {
           <h4>Instructions</h4>
           {recipe.instructions && (
             <ol>
-              {recipe.instructions.map((item) => (
-                <li>{item.step}</li>
+              {recipe.instructions.map((item, index) => (
+                <li key={index}>{item.step}</li>
               ))}
             </ol>
           )}
