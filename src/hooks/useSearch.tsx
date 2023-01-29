@@ -1,31 +1,14 @@
 import React from "react";
+import { RecipeT, InstructionT } from "../components/Recipe";
 
 const apiKey = "d8b1a12242b6478da2b4e77b09ca165c";
 const resultsCount = 20;
-
-export type Recipe = {
-  id: string;
-  name: string;
-  description: string;
-  ingredients: string[];
-  instructions?: Instruction[];
-
-  imageURL: string;
-
-  prepMinutes?: number;
-  cookMinutes?: number;
-  totalMinutes?: number;
-};
-export type Instruction = {
-  number: number;
-  step: string;
-};
 
 export default function useSearch() {
   const [isGathering, setIsGathering] = React.useState(false);
   const [query, setQuery] = React.useState("");
   const [sort, setSort] = React.useState("popularity"); //'time', 'random'
-  const [recipes, setRecipes] = React.useState<Recipe[]>([]);
+  const [recipes, setRecipes] = React.useState<RecipeT[]>([]);
 
   function search(query: string, sort: string = "popularity") {
     setQuery(query);
@@ -54,7 +37,7 @@ export default function useSearch() {
         console.log("Failed to retrieve data from API: " + error);
       });
   }
-  function buildRecipes(results: any[]): Array<Recipe> {
+  function buildRecipes(results: any[]): Array<RecipeT> {
     return results.map((result) => {
       //get ingredients
       const ingredients = result.extendedIngredients.map((item: any) => {
@@ -71,8 +54,8 @@ export default function useSearch() {
           return {
             number: step.number,
             step: step.step,
-          } as Instruction;
-        }) as Instruction[];
+          } as InstructionT;
+        }) as InstructionT[];
       }
 
       //build recipe
@@ -93,8 +76,8 @@ export default function useSearch() {
           result.cookingMinutes > 0 ? result.cookingMinutes : undefined,
         totalMinutes:
           result.readyInMinutes > 0 ? result.readyInMinutes : undefined,
-      } as Recipe;
-    }) as Recipe[];
+      } as RecipeT;
+    }) as RecipeT[];
   }
 
   return { search, isGathering, query, sort, recipes };

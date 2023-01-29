@@ -1,5 +1,20 @@
-import { Recipe as RecipeT } from "../hooks/useSearch";
+export type RecipeT = {
+  id: string;
+  name: string;
+  description: string;
+  ingredients: string[];
+  instructions?: InstructionT[];
 
+  imageURL: string;
+
+  prepMinutes?: number;
+  cookMinutes?: number;
+  totalMinutes?: number;
+};
+export type InstructionT = {
+  number: number;
+  step: string;
+};
 type RecipeProps = {
   recipe: RecipeT;
 };
