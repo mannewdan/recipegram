@@ -36,9 +36,9 @@ type DataContextT = {
     whichStatus: UserDataStatus
   ) => boolean;
   addRecipeData: (recipe: RecipeT, liked?: boolean) => boolean;
-  getRecipeLikes: (recipe: RecipeT) => number;
   updateRecipeLikes: (recipe: RecipeT, change: number) => void;
   getFavoriteRecipes: () => Array<RecipeT>;
+  getRecipeMetaData: (id: string) => RecipeDataT;
 };
 
 const Context = React.createContext({} as DataContextT);
@@ -110,8 +110,8 @@ export function DataContextProvider(props: { children: React.ReactNode }) {
       return recipeData[id].recipe;
     }) as RecipeT[];
   }
-  function getRecipeLikes(recipe: RecipeT): number {
-    return recipeData[recipe.id] ? recipeData[recipe.id].likeCount : 0;
+  function getRecipeMetaData(id: string): RecipeDataT {
+    return recipeData[id];
   }
   function updateRecipeLikes(recipe: RecipeT, change: number) {
     if (!recipeData[recipe.id]) return;
@@ -141,7 +141,7 @@ export function DataContextProvider(props: { children: React.ReactNode }) {
         toggleUserRecipeStatus,
         isUserRecipeStatusPositive,
         addRecipeData,
-        getRecipeLikes,
+        getRecipeMetaData,
         updateRecipeLikes,
         getFavoriteRecipes,
       }}
