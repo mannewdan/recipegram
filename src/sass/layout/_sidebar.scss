@@ -1,0 +1,59 @@
+@use "../globals/themes" as *;
+
+.sidebar {
+  max-width: 300px;
+  min-width: 300px;
+  padding: 10px 16px;
+
+  background-color: $white;
+  border-right: 1px solid $gray;
+
+  &__logo-container {
+    margin: 20px 0;
+  }
+  &__link-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  &__link {
+    display: flex;
+    align-items: center;
+    padding: 16px 20px;
+
+    font-size: 1.15rem;
+    text-decoration: none;
+
+    text-decoration: none;
+    color: $black;
+    border-radius: 100px;
+
+    transition: background-color 400ms;
+
+    &--icon-holder {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0 24px 0 12px;
+    }
+    i {
+      position: absolute;
+      font-size: 1.75rem;
+    }
+    &:hover {
+      background-color: $white-gray;
+      i {
+        font-size: 1.85rem;
+      }
+    }
+    &.active {
+      color: $white;
+      background-color: $accent-light;
+      text-shadow: 0 0 4px hsl(0, 0%, 0%, 50%);
+      i {
+        font-size: 1.85rem;
+      }
+    }
+  }
+}

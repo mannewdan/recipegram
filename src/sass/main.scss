@@ -1,2 +1,23 @@
 @use "globals";
 @use "layout";
+@use "./globals/sizes" as *;
+
+.root-container {
+  display: flex;
+}
+.main-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+main {
+  width: 100%;
+  min-height: calc(100vh - $footer-height);
+  margin: 0 auto;
+}
+
+.logo {
+  width: 125px;
+  object-fit: cover;
+  aspect-ratio: 3;
+}
