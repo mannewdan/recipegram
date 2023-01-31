@@ -27,7 +27,7 @@ export default function Recipe({ recipe }: RecipeProps) {
     toggleUserRecipeStatus,
     isUserRecipeStatusPositive,
     addRecipeData,
-    getRecipeLikes,
+    getRecipeMetaData,
     updateRecipeLikes,
   } = useDataContext();
 
@@ -48,6 +48,8 @@ export default function Recipe({ recipe }: RecipeProps) {
     recipe.id,
     UserDataStatus.Favorite
   );
+  const metaData = getRecipeMetaData(recipe.id);
+  const likes = metaData ? metaData.likeCount : 0;
 
   return (
     <div key={recipe.id} className="recipe">
@@ -125,7 +127,7 @@ export default function Recipe({ recipe }: RecipeProps) {
                 {Intl.NumberFormat("en-US", {
                   notation: "compact",
                   maximumFractionDigits: 1,
-                }).format(getRecipeLikes(recipe))}
+                }).format(likes)}
               </span>
             </div>
           </div>
