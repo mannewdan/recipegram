@@ -339,6 +339,15 @@ footer a {
   font-size: 1.25rem;
   color: hsl(0deg, 0%, 85%);
 }
+.favorites__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.favorites__item--time {
+  color: #778aeb;
+  font-weight: 700;
+}
 
 .sidebar-container {
   position: relative;

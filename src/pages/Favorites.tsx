@@ -3,9 +3,8 @@ import Recipe from "../components/Recipe";
 import { useDataContext } from "../context/DataContext";
 
 export default function Favorites() {
-  const [recipes, setRecipes] = React.useState(
-    useDataContext().getFavoriteRecipes()
-  );
+  const { getRecipeMetaData, getFavoriteRecipes } = useDataContext();
+  const [recipes, setRecipes] = React.useState(getFavoriteRecipes());
 
   //scroll to top
   React.useEffect(() => {
@@ -14,8 +13,21 @@ export default function Favorites() {
 
   //show most recent at the top
   const recipeEls = [];
+  let previousDate = undefined;
   for (let i = recipes.length - 1; i >= 0; i--) {
-    recipeEls.push(<Recipe key={recipes[i].id} recipe={recipes[i]} />);
+    const metaData = getRecipeMetaData(recipes[i].id);
+    const newDate = metaData
+      ? new Date(metaData.lastInteraction).toDateString()
+      : undefined;
+    recipeEls.push(
+      <section key={recipes[i].id} className="favorites__item">
+        {newDate && newDate !== previousDate && (
+          <span className="favorites__item--time">{newDate}</span>
+        )}
+        <Recipe recipe={recipes[i]} />
+      </section>
+    );
+    previousDate = newDate;
   }
 
   return (
