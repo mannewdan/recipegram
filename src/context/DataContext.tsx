@@ -30,11 +30,14 @@ type ReplyDataT = {
   likeCount: number;
 };
 type DataContextT = {
-  toggleUserRecipeStatus: (id: string, whichStatus: UserDataStatus) => void;
+  toggleUserRecipeStatus: (id: string, whichStatus: UserDataStatus) => boolean;
   isUserRecipeStatusPositive: (
     id: string,
     whichStatus: UserDataStatus
   ) => boolean;
+  addRecipeData: (recipe: RecipeT, liked?: boolean) => boolean;
+  getRecipeLikes: (recipe: RecipeT) => number;
+  updateRecipeLikes: (recipe: RecipeT, change: number) => void;
 };
 
 const Context = React.createContext({} as DataContextT);
@@ -49,7 +52,9 @@ export function DataContextProvider(props: { children: React.ReactNode }) {
       ? JSON.parse(data)
       : ({ likes: {}, favorites: {} } as UserDataT);
   });
-  const [recipeData, setRecipeData] = React.useState(() => {
+  const [recipeData, setRecipeData] = React.useState<{
+    [key: string]: RecipeDataT;
+  }>(() => {
     const data = localStorage.getItem("recipe-data");
     return data ? JSON.parse(data) : {};
   });
@@ -58,17 +63,24 @@ export function DataContextProvider(props: { children: React.ReactNode }) {
   console.log(recipeData);
 
   //functions
-  function toggleUserRecipeStatus(id: string, whichStatus: UserDataStatus) {
+  function toggleUserRecipeStatus(
+    id: string,
+    whichStatus: UserDataStatus
+  ): boolean {
     if (userData[whichStatus][id]) {
       setUserData((prev: UserDataT) => {
         const newData = { ...prev };
         delete newData[whichStatus][id];
         return newData;
       });
+
+      return false;
     } else {
       setUserData((prev: UserDataT) => {
         return { ...prev, [whichStatus]: { ...prev[whichStatus], [id]: true } };
       });
+
+      return true;
     }
   }
   function isUserRecipeStatusPositive(
@@ -76,6 +88,40 @@ export function DataContextProvider(props: { children: React.ReactNode }) {
     whichStatus: UserDataStatus
   ): boolean {
     return !!userData[whichStatus][id];
+  }
+  function addRecipeData(recipe: RecipeT, liked: boolean = false): boolean {
+    if (recipeData[recipe.id]) return false;
+
+    setRecipeData((prev) => {
+      return {
+        ...prev,
+        [recipe.id]: {
+          id: recipe.id,
+          recipe,
+          likeCount: liked ? 1 : 0,
+          comments: [],
+          lastInteraction: new Date(),
+        },
+      };
+    });
+
+    return true;
+  }
+  function getRecipeLikes(recipe: RecipeT): number {
+    return recipeData[recipe.id] ? recipeData[recipe.id].likeCount : 0;
+  }
+  function updateRecipeLikes(recipe: RecipeT, change: number) {
+    if (!recipeData[recipe.id]) return;
+
+    setRecipeData((prev) => {
+      return {
+        ...prev,
+        [recipe.id]: {
+          ...prev[recipe.id],
+          likeCount: prev[recipe.id].likeCount + change,
+        },
+      };
+    });
   }
 
   //save
@@ -91,6 +137,9 @@ export function DataContextProvider(props: { children: React.ReactNode }) {
       value={{
         toggleUserRecipeStatus,
         isUserRecipeStatusPositive,
+        addRecipeData,
+        getRecipeLikes,
+        updateRecipeLikes,
       }}
     >
       {props.children}

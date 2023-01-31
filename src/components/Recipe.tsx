@@ -23,8 +23,13 @@ type RecipeProps = {
 };
 
 export default function Recipe({ recipe }: RecipeProps) {
-  const { toggleUserRecipeStatus, isUserRecipeStatusPositive } =
-    useDataContext();
+  const {
+    toggleUserRecipeStatus,
+    isUserRecipeStatusPositive,
+    addRecipeData,
+    getRecipeLikes,
+    updateRecipeLikes,
+  } = useDataContext();
 
   function timeText(minutes: number) {
     return minutes < 60
@@ -78,6 +83,7 @@ export default function Recipe({ recipe }: RecipeProps) {
               <button
                 onClick={() => {
                   toggleUserRecipeStatus(recipe.id, UserDataStatus.Favorite);
+                  addRecipeData(recipe);
                 }}
                 className="icon-button"
               >
@@ -97,7 +103,12 @@ export default function Recipe({ recipe }: RecipeProps) {
               </button>
               <button
                 onClick={() => {
-                  toggleUserRecipeStatus(recipe.id, UserDataStatus.Like);
+                  const liked = toggleUserRecipeStatus(
+                    recipe.id,
+                    UserDataStatus.Like
+                  );
+                  const added = addRecipeData(recipe, liked);
+                  if (!added) updateRecipeLikes(recipe, liked ? 1 : -1);
                 }}
                 className="icon-button"
               >
@@ -110,7 +121,12 @@ export default function Recipe({ recipe }: RecipeProps) {
                   className={`icon fa-solid fa-heart ${liked ? "pulse" : ""}`}
                 ></i>
               </button>
-              <span className="unselectable">3.1k</span>
+              <span className="unselectable">
+                {Intl.NumberFormat("en-US", {
+                  notation: "compact",
+                  maximumFractionDigits: 1,
+                }).format(getRecipeLikes(recipe))}
+              </span>
             </div>
           </div>
 

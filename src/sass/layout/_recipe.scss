@@ -79,6 +79,11 @@
     display: flex;
     align-items: center;
     gap: 5px;
+
+    span {
+      font-size: 0.8rem;
+      min-width: 24px;
+    }
   }
 
   &__comments {

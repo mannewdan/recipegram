@@ -169,9 +169,6 @@ ol {
   border-radius: 6px;
   box-shadow: 0 0 4px hsla(0deg, 0%, 0%, 0.75);
 }
-.recipe__prep-time:nth-of-type(2) {
-  bottom: 48px;
-}
 .recipe__details {
   display: flex;
   flex-direction: column;
@@ -192,6 +189,10 @@ ol {
   display: flex;
   align-items: center;
   gap: 5px;
+}
+.recipe__buttons span {
+  font-size: 0.8rem;
+  min-width: 24px;
 }
 .recipe__comments--view-comments {
   border: none;
