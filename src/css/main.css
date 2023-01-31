@@ -331,6 +331,14 @@ footer a {
   font-size: 2rem;
   text-align: center;
 }
+.favorites__empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 135px - 50px);
+  font-size: 1.25rem;
+  color: hsl(0deg, 0%, 85%);
+}
 
 .sidebar-container {
   position: relative;

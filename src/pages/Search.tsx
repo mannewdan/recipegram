@@ -1,3 +1,4 @@
+import React from "react";
 import Recipe, { RecipeT } from "../components/Recipe";
 import SearchBar from "../components/SearchBar";
 
@@ -8,6 +9,11 @@ type SearchProps = {
 };
 
 export default function Search({ search, isGathering, recipes }: SearchProps) {
+  //scroll to top
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <>
       <SearchBar search={search} />
