@@ -1,10 +1,13 @@
-import useSearch from "../hooks/useSearch";
-import Recipe from "../components/Recipe";
+import Recipe, { RecipeT } from "../components/Recipe";
 import SearchBar from "../components/SearchBar";
 
-export default function Search() {
-  const { search, isGathering, recipes } = useSearch();
+type SearchProps = {
+  search: (query: string, sort?: string) => void;
+  isGathering: boolean;
+  recipes: Array<RecipeT>;
+};
 
+export default function Search({ search, isGathering, recipes }: SearchProps) {
   return (
     <>
       <SearchBar search={search} />

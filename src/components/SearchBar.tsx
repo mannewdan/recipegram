@@ -1,5 +1,6 @@
 import React from "react";
 import useStickyScroll from "../hooks/useStickyScroll";
+import { useNavigate } from "react-router-dom";
 
 type SearchBarProps = {
   search: (query: string, sort?: string) => void;
@@ -10,6 +11,7 @@ export default function SearchBar({ search }: SearchBarProps) {
   const [sortSelection, setSortSelection] = React.useState("random");
   const { positionMode, positionOffset, transitionSpeed } =
     useStickyScroll(135);
+  const navigate = useNavigate();
 
   return (
     <div className="search-container">
@@ -27,11 +29,21 @@ export default function SearchBar({ search }: SearchBarProps) {
             type="text"
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={(e) => {
-              if (e.key == "Enter") search(query, sortSelection);
+              if (e.key == "Enter") {
+                navigate("/");
+                search(query, sortSelection);
+              }
             }}
             placeholder="What are you hungry for?"
           ></input>
-          <button onClick={() => search(query, sortSelection)}>Search</button>
+          <button
+            onClick={() => {
+              navigate("/");
+              search(query, sortSelection);
+            }}
+          >
+            Search
+          </button>
         </div>
         <form className="search__sort">
           <div>
