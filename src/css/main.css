@@ -320,4 +320,14 @@ footer {
 footer a {
   text-decoration: none;
   color: #d1d1d1;
+}
+
+.favorites__title {
+  background-color: #546de5;
+  color: hsl(0deg, 0%, 100%);
+  padding: 12px;
+}
+.favorites__title h3 {
+  font-size: 2rem;
+  text-align: center;
 }/*# sourceMappingURL=main.css.map */

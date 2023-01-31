@@ -1,0 +1,12 @@
+@use "../globals/themes" as *;
+
+.favorites__title {
+  background-color: $accent;
+  color: $white;
+  padding: 12px;
+
+  h3 {
+    font-size: 2rem;
+    text-align: center;
+  }
+}

@@ -38,6 +38,7 @@ type DataContextT = {
   addRecipeData: (recipe: RecipeT, liked?: boolean) => boolean;
   getRecipeLikes: (recipe: RecipeT) => number;
   updateRecipeLikes: (recipe: RecipeT, change: number) => void;
+  getFavoriteRecipes: () => Array<RecipeT>;
 };
 
 const Context = React.createContext({} as DataContextT);
@@ -58,9 +59,6 @@ export function DataContextProvider(props: { children: React.ReactNode }) {
     const data = localStorage.getItem("recipe-data");
     return data ? JSON.parse(data) : {};
   });
-
-  console.log(userData);
-  console.log(recipeData);
 
   //functions
   function toggleUserRecipeStatus(
@@ -107,6 +105,11 @@ export function DataContextProvider(props: { children: React.ReactNode }) {
 
     return true;
   }
+  function getFavoriteRecipes(): Array<RecipeT> {
+    return Object.keys(userData.favorites).map((id) => {
+      return recipeData[id].recipe;
+    }) as RecipeT[];
+  }
   function getRecipeLikes(recipe: RecipeT): number {
     return recipeData[recipe.id] ? recipeData[recipe.id].likeCount : 0;
   }
@@ -140,6 +143,7 @@ export function DataContextProvider(props: { children: React.ReactNode }) {
         addRecipeData,
         getRecipeLikes,
         updateRecipeLikes,
+        getFavoriteRecipes,
       }}
     >
       {props.children}
