@@ -17,7 +17,7 @@ export default function SearchBar({ search }: SearchBarProps) {
     <div className="search-container">
       <div
         style={{
-          position: positionMode === "fixed" ? "fixed" : "unset",
+          position: positionMode === "fixed" ? "fixed" : "absolute",
           transform: `translateY(${positionOffset}px)`,
           transition: `transform ${transitionSpeed}ms`,
         }}

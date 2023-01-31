@@ -1,9 +1,17 @@
 @use "../globals/themes" as *;
+@use "../globals/sizes" as *;
 
+.sidebar-container {
+  position: relative;
+  max-width: $sidebar-width;
+  min-width: $sidebar-width;
+}
 .sidebar {
-  max-width: 300px;
-  min-width: 300px;
+  position: fixed;
+  width: $sidebar-width;
+  height: 100vh;
   padding: 10px 16px;
+  z-index: 1000;
 
   background-color: $white;
   border-right: 1px solid $gray;

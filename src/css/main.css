@@ -255,7 +255,7 @@ img {
 }
 
 .search {
-  width: 100%;
+  width: calc(100vw - 250px);
   height: 135px;
   box-shadow: 0px 1px 2px hsla(0deg, 0%, 0%, 0.5);
   display: flex;
@@ -332,10 +332,18 @@ footer a {
   text-align: center;
 }
 
+.sidebar-container {
+  position: relative;
+  max-width: 250px;
+  min-width: 250px;
+}
+
 .sidebar {
-  max-width: 300px;
-  min-width: 300px;
+  position: fixed;
+  width: 250px;
+  height: 100vh;
   padding: 10px 16px;
+  z-index: 1000;
   background-color: hsl(0deg, 0%, 100%);
   border-right: 1px solid hsl(0deg, 0%, 85%);
 }
