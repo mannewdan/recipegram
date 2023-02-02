@@ -26,8 +26,6 @@ export default function useSearch() {
           //daily limit reached
           console.log("Failed to retrieve data from API: " + data.message);
         } else {
-          console.log(data);
-
           //convert data array into an array of recipes
           setRecipes(buildRecipes(data.results));
         }

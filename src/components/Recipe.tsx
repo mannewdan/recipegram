@@ -1,5 +1,8 @@
+import React from "react";
 import { useDataContext } from "../context/DataContext";
 import { UserDataStatus } from "../context/DataContext";
+import timeText from "../utils/timeText";
+import CommentsPopup from "./CommentsPopup";
 
 export type RecipeT = {
   id: string;
@@ -30,19 +33,11 @@ export default function Recipe({ recipe }: RecipeProps) {
     getRecipeMetaData,
     updateRecipeLikes,
   } = useDataContext();
-
-  function timeText(minutes: number) {
-    return minutes < 60
-      ? minutes + " mins"
-      : Math.round(minutes / 60) +
-          " hr" +
-          (Math.round(minutes / 60) > 1 ? "s" : "");
-  }
+  const [commentsOpen, setCommentsOpen] = React.useState(false);
 
   const cookText = recipe.cookMinutes ? timeText(recipe.cookMinutes) : null;
   const prepText = recipe.prepMinutes ? timeText(recipe.prepMinutes) : null;
   const totalText = recipe.totalMinutes ? timeText(recipe.totalMinutes) : null;
-
   const liked = isUserRecipeStatusPositive(recipe.id, UserDataStatus.Like);
   const favorited = isUserRecipeStatusPositive(
     recipe.id,
@@ -53,6 +48,10 @@ export default function Recipe({ recipe }: RecipeProps) {
 
   return (
     <div key={recipe.id} className="recipe">
+      {commentsOpen && (
+        <CommentsPopup closeComments={() => setCommentsOpen(false)} />
+      )}
+
       <div className="recipe__title">
         <h3>{recipe.name}</h3>
       </div>
@@ -100,7 +99,12 @@ export default function Recipe({ recipe }: RecipeProps) {
                   }`}
                 ></i>
               </button>
-              <button className="icon-button">
+              <button
+                onClick={() => {
+                  setCommentsOpen(true);
+                }}
+                className="icon-button"
+              >
                 <i className={`icon fa-regular fa-comment instant`}></i>
               </button>
               <button

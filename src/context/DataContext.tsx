@@ -126,6 +126,9 @@ export function DataContextProvider(props: { children: React.ReactNode }) {
       };
     });
   }
+  function postComment() {}
+  function updateComment() {}
+  function deleteComment() {}
 
   //save
   React.useEffect(() => {

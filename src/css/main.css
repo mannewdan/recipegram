@@ -409,6 +409,36 @@ footer a {
   font-size: 1.85rem;
 }
 
+.comments-container {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10000;
+  left: 0;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.comments-background {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  opacity: 30%;
+}
+
+.comments {
+  width: calc(100vw - 200px);
+  height: 66vw;
+  max-height: calc(100vh - 40px);
+  max-width: 150vh;
+  min-height: 66vh;
+  z-index: 10001;
+  background-color: hsl(0deg, 0%, 100%);
+}
+
 .root-container {
   display: flex;
 }
