@@ -119,6 +119,12 @@ img {
           user-select: none;
 }
 
+.disable-scroll {
+  height: 100%;
+  width: calc(100% - 16px);
+  overflow: hidden;
+}
+
 .recipe-container {
   display: flex;
   flex-direction: column;

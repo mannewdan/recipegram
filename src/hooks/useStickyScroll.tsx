@@ -33,5 +33,9 @@ export default function useStickyScroll(threshold: number) {
     };
   }, [scrollHeight]);
 
-  return { positionMode, positionOffset, transitionSpeed };
+  return {
+    positionMode,
+    positionOffset,
+    transitionSpeed,
+  };
 }

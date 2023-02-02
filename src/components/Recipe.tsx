@@ -1,6 +1,7 @@
 import React from "react";
 import { useDataContext } from "../context/DataContext";
 import { UserDataStatus } from "../context/DataContext";
+import useDisableScroll from "../hooks/useDisableScroll";
 import timeText from "../utils/timeText";
 import CommentsPopup from "./CommentsPopup";
 
@@ -34,6 +35,7 @@ export default function Recipe({ recipe }: RecipeProps) {
     updateRecipeLikes,
   } = useDataContext();
   const [commentsOpen, setCommentsOpen] = React.useState(false);
+  const [disableScroll] = useDisableScroll();
 
   const cookText = recipe.cookMinutes ? timeText(recipe.cookMinutes) : null;
   const prepText = recipe.prepMinutes ? timeText(recipe.prepMinutes) : null;
@@ -49,7 +51,12 @@ export default function Recipe({ recipe }: RecipeProps) {
   return (
     <div key={recipe.id} className="recipe">
       {commentsOpen && (
-        <CommentsPopup closeComments={() => setCommentsOpen(false)} />
+        <CommentsPopup
+          closeComments={() => {
+            setCommentsOpen(false);
+            disableScroll(false);
+          }}
+        />
       )}
 
       <div className="recipe__title">
@@ -102,6 +109,7 @@ export default function Recipe({ recipe }: RecipeProps) {
               <button
                 onClick={() => {
                   setCommentsOpen(true);
+                  disableScroll(true);
                 }}
                 className="icon-button"
               >
