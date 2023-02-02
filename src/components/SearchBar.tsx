@@ -30,7 +30,7 @@ export default function SearchBar({ search }: SearchBarProps) {
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={(e) => {
               if (e.key == "Enter") {
-                navigate("/");
+                navigate("/search");
                 search(query, sortSelection);
               }
             }}
@@ -38,7 +38,7 @@ export default function SearchBar({ search }: SearchBarProps) {
           ></input>
           <button
             onClick={() => {
-              navigate("/");
+              navigate("/search");
               search(query, sortSelection);
             }}
           >
