@@ -52,6 +52,7 @@ export default function Recipe({ recipe }: RecipeProps) {
     <div key={recipe.id} className="recipe">
       {commentsOpen && (
         <CommentsPopup
+          recipe={recipe}
           closeComments={() => {
             setCommentsOpen(false);
             disableScroll(false);
@@ -168,7 +169,13 @@ export default function Recipe({ recipe }: RecipeProps) {
       </div>
 
       <div className="recipe__comments">
-        <button className="recipe__comments--view-comments">
+        <button
+          onClick={() => {
+            setCommentsOpen(true);
+            disableScroll(true);
+          }}
+          className="recipe__comments--view-comments"
+        >
           View 1 comment
         </button>
         <form className="recipe__comments--reply-bar">
