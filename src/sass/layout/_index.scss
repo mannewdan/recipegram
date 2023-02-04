@@ -1,6 +1,9 @@
 @use "recipe";
+@use "recipe-simplified";
 @use "search";
 @use "footer";
 @use "favorites";
 @use "sidebar";
-@use "comments";
+@use "comments-popup";
+@use "comment";
+@use "comment-bar";

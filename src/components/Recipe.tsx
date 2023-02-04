@@ -3,6 +3,7 @@ import { useDataContext } from "../context/DataContext";
 import { UserDataStatus } from "../context/DataContext";
 import useDisableScroll from "../hooks/useDisableScroll";
 import timeText from "../utils/timeText";
+import CommentBar from "./CommentBar";
 import CommentsPopup from "./CommentsPopup";
 
 export type RecipeT = {
@@ -178,10 +179,7 @@ export default function Recipe({ recipe }: RecipeProps) {
         >
           View 1 comment
         </button>
-        <form className="recipe__comments--reply-bar">
-          <input type="text" placeholder="Add a comment..."></input>
-          <button>Post</button>
-        </form>
+        <CommentBar />
       </div>
     </div>
   );

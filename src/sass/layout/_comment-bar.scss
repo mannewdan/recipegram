@@ -1,0 +1,42 @@
+@use "../globals/themes" as *;
+@use "../globals/sizes" as *;
+
+.comment-bar {
+  display: flex;
+  justify-content: space-between;
+
+  height: $comment-bar-height;
+  border-top: 1px solid $gray;
+
+  input {
+    padding: 0 6px 0 14px;
+    width: 100%;
+    border: none;
+    border-bottom-left-radius: 6px;
+
+    &:focus {
+      outline: none;
+    }
+    &::placeholder {
+      color: $gray;
+    }
+  }
+  button {
+    margin-right: 10px;
+    font-weight: 700;
+    background-color: transparent;
+    border: none;
+
+    color: $accent-light;
+    opacity: 50%;
+
+    &.clickable {
+      opacity: 100%;
+      cursor: pointer;
+
+      &:hover {
+        color: $black;
+      }
+    }
+  }
+}

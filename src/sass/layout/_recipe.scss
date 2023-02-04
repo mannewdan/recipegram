@@ -95,44 +95,5 @@
 
       margin: 1em 0.5em;
     }
-
-    &--reply-bar {
-      border-top: 1px solid $gray;
-
-      display: flex;
-      justify-content: space-between;
-
-      input {
-        padding: 14px;
-        width: 100%;
-        border: none;
-        border-bottom-left-radius: 6px;
-
-        &:focus {
-          outline: none;
-        }
-        &::placeholder {
-          color: $gray;
-        }
-      }
-      button {
-        margin-right: 10px;
-        font-weight: 700;
-        background-color: transparent;
-        border: none;
-
-        color: $accent-light;
-        opacity: 50%;
-
-        &.clickable {
-          opacity: 100%;
-          cursor: pointer;
-
-          &:hover {
-            color: $black;
-          }
-        }
-      }
-    }
   }
 }

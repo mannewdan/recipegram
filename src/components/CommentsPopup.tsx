@@ -1,4 +1,7 @@
 import { RecipeT } from "./Recipe";
+import Comment from "./Comment";
+import RecipeSimplified from "./RecipeSimplified";
+import CommentBar from "./CommentBar";
 
 type CommentsPopupProps = {
   recipe: RecipeT;
@@ -11,6 +14,7 @@ export default function CommentsPopup({
 }: CommentsPopupProps) {
   return (
     <div className="comments-container">
+      {/* Background */}
       <div
         onClick={() => {
           closeComments();
@@ -26,33 +30,28 @@ export default function CommentsPopup({
         X
       </button>
 
+      {/* Popup */}
       <div className="comments">
         <h3 className="comments__title">{recipe.name}</h3>
 
-        <div className="comments__content-container">
-          <div className="comments__recipe">
-            <img src={recipe.imageURL}></img>
-
-            <div className="comments__recipe--scroll-section">
-              <div className="recipe__details">
-                <h4>Ingredients</h4>
-                <ul>
-                  {recipe.ingredients.map((item, index) => (
-                    <li key={index}>{item}</li>
-                  ))}
-                </ul>
-                <h4>Instructions</h4>
-                {recipe.instructions && (
-                  <ol>
-                    {recipe.instructions.map((item, index) => (
-                      <li key={index}>{item.step}</li>
-                    ))}
-                  </ol>
-                )}
-              </div>
-            </div>
+        <div className="comments__main-container">
+          <div className="comments__recipe-section">
+            <RecipeSimplified recipe={recipe} />
           </div>
-          <div className="comments__posts">posts</div>
+
+          <div className="comments__posts-section">
+            <div className="comments__posts-container">
+              <Comment />
+              <Comment />
+              <Comment />
+              <Comment />
+              <Comment />
+              <Comment />
+              <Comment />
+            </div>
+
+            <CommentBar />
+          </div>
         </div>
       </div>
     </div>

@@ -1,4 +1,5 @@
 @use "../globals/themes" as *;
+@use "../globals/sizes" as *;
 
 $title-height: 48px;
 
@@ -36,6 +37,7 @@ $title-height: 48px;
   z-index: 10001;
   cursor: pointer;
 }
+
 .comments {
   width: calc(100vw - 200px);
   height: calc(100vw * 0.66);
@@ -56,35 +58,24 @@ $title-height: 48px;
     font-size: 1.25rem;
     border-bottom: 1px solid $gray;
   }
-  &__content-container {
+  &__main-container {
     display: flex;
     height: calc(100% - $title-height);
   }
-  &__recipe {
+  &__recipe-section {
     width: 45%;
     min-width: 300px;
-    border-radius: 3px;
-    border-right: 1px solid $gray;
-
-    & h4 {
-      margin: 0;
-    }
-
-    &--scroll-section {
-      overflow-y: auto;
-      height: 70%;
-      margin-top: -4px;
-      padding: 12px 0;
-    }
-
-    & img {
-      height: 30%;
-      object-fit: cover;
-      margin: 0;
-    }
   }
-  &__posts {
+  &__posts-section {
     width: 55%;
-    border-radius: 3px;
+  }
+  &__posts-container {
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+    gap: 16px;
+    height: calc(100% - $comment-bar-height);
+
+    overflow-y: scroll;
   }
 }
