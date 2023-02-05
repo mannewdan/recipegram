@@ -2,6 +2,7 @@ import { RecipeT } from "./Recipe";
 import Comment from "./Comment";
 import RecipeSimplified from "./RecipeSimplified";
 import CommentBar from "./CommentBar";
+import { useDataContext } from "../context/DataContext";
 
 type CommentsPopupProps = {
   recipe: RecipeT;
@@ -12,6 +13,15 @@ export default function CommentsPopup({
   recipe,
   closeComments,
 }: CommentsPopupProps) {
+  const comments = useDataContext().getComments(recipe.id);
+  const commentEls = !comments ? (
+    <></>
+  ) : (
+    Object.values(comments).map((comment) => {
+      return <Comment key={comment.id} commentData={comment} />;
+    })
+  );
+
   return (
     <div className="comments-container">
       {/* Background */}
@@ -40,15 +50,7 @@ export default function CommentsPopup({
           </div>
 
           <div className="comments__posts-section">
-            <div className="comments__posts-container">
-              <Comment />
-              <Comment />
-              <Comment />
-              <Comment />
-              <Comment />
-              <Comment />
-              <Comment />
-            </div>
+            <div className="comments__posts-container">{commentEls}</div>
 
             <CommentBar recipeID={recipe.id} />
           </div>

@@ -1,5 +1,6 @@
 import React from "react";
 import { RecipeT } from "../components/Recipe";
+import { v4 as uuid } from "uuid";
 
 type UserDataT = {
   likes: { [key: string]: boolean };
@@ -16,7 +17,7 @@ type RecipeDataT = {
   comments: { [key: string]: CommentDataT };
   lastInteraction: Date;
 };
-type CommentDataT = {
+export type CommentDataT = {
   id: string;
   recipeID: string;
   userID: string;
@@ -61,6 +62,9 @@ type DataContextT = {
     commentID: string,
     replyID?: string
   ) => void;
+  getComments: (
+    recipeID: string
+  ) => { [key: string]: CommentDataT } | undefined;
 };
 
 const Context = React.createContext({} as DataContextT);
@@ -81,6 +85,8 @@ export function DataContextProvider(props: { children: React.ReactNode }) {
     const data = localStorage.getItem("recipe-data");
     return data ? JSON.parse(data) : {};
   });
+
+  console.log(recipeData);
 
   //recipe functions
   function toggleUserRecipeStatus(
@@ -156,7 +162,32 @@ export function DataContextProvider(props: { children: React.ReactNode }) {
     comment: string,
     commentID?: string
   ) {
-    console.log(userID + " " + recipeID + " " + comment);
+    if (false) {
+      //if commentID is defined and exists within the recipe, post this as a reply
+    } else {
+      const newComment = {
+        id: uuid(),
+        recipeID,
+        userID,
+        content: comment,
+        time: new Date(),
+        likeCount: 0,
+        replies: {},
+      };
+
+      setRecipeData((prev) => {
+        return {
+          ...prev,
+          [recipeID]: {
+            ...prev[recipeID],
+            comments: {
+              ...prev[recipeID].comments,
+              [newComment.id]: newComment,
+            },
+          },
+        };
+      });
+    }
   }
   function updateComment(
     recipeID: string,
@@ -169,6 +200,12 @@ export function DataContextProvider(props: { children: React.ReactNode }) {
     commentID: string,
     replyID?: string
   ) {}
+  function getComments(
+    recipeID: string
+  ): { [key: string]: CommentDataT } | undefined {
+    const recipeMetaData = getRecipeMetaData(recipeID);
+    return recipeMetaData?.comments;
+  }
 
   //save
   React.useEffect(() => {
@@ -190,6 +227,7 @@ export function DataContextProvider(props: { children: React.ReactNode }) {
         postComment,
         updateComment,
         deleteComment,
+        getComments,
       }}
     >
       {props.children}

@@ -1,24 +1,34 @@
 import React from "react";
+import { CommentDataT } from "../context/DataContext";
 
-export default function Comment() {
+type CommentProps = {
+  commentData: CommentDataT;
+};
+
+export default function Comment({ commentData }: CommentProps) {
   const [showReplies, setShowReplies] = React.useState(false);
+
+  const likesLabel =
+    commentData.likeCount > 0
+      ? commentData.likeCount + (commentData.likeCount > 1 ? " Likes" : " Like")
+      : "";
 
   return (
     <div className="comment-container">
       <div className="comment-content">
         <div>
-          <strong className="comment-content__username">username</strong>
+          <strong className="comment-content__username">
+            {commentData.userID}
+          </strong>
           <span className="comment-content__comment">
-            Sample Comment Sample Comment Sample Comment Sample Comment Sample
-            Comment Sample Comment Sample Comment Sample Comment Sample Comment
-            Sample Comment
+            {commentData.content}
           </span>
         </div>
         <div className="comment-content__interactions">
           <div>
             <span className="comment-content__interactions--time">12d</span>
             <span className="comment-content__interactions--like-count">
-              1 like
+              {likesLabel}
             </span>
             <button className="comment-content__interactions--reply-button">
               Reply
