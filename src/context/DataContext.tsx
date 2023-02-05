@@ -13,17 +13,22 @@ type RecipeDataT = {
   id: string;
   recipe: RecipeT;
   likeCount: number;
-  comments: Array<CommentDataT>;
+  comments: { [key: string]: CommentDataT };
   lastInteraction: Date;
 };
 type CommentDataT = {
+  id: string;
+  recipeID: string;
   userID: string;
   content: string;
   time: Date;
   likeCount: number;
-  replies: Array<ReplyDataT>;
+  replies: { [key: string]: ReplyDataT };
 };
 type ReplyDataT = {
+  id: string;
+  recipeID: string;
+  commentID: string;
   userID: string;
   content: string;
   time: Date;
@@ -39,6 +44,23 @@ type DataContextT = {
   updateRecipeLikes: (recipe: RecipeT, change: number) => void;
   getFavoriteRecipes: () => Array<RecipeT>;
   getRecipeMetaData: (id: string) => RecipeDataT;
+  postComment: (
+    userID: string,
+    recipeID: string,
+    comment: string,
+    commentID?: string
+  ) => void;
+  updateComment: (
+    recipeID: string,
+    commentID: string,
+    comment: string,
+    replyID?: string
+  ) => void;
+  deleteComment: (
+    recipeID: string,
+    commentID: string,
+    replyID?: string
+  ) => void;
 };
 
 const Context = React.createContext({} as DataContextT);
@@ -60,7 +82,7 @@ export function DataContextProvider(props: { children: React.ReactNode }) {
     return data ? JSON.parse(data) : {};
   });
 
-  //functions
+  //recipe functions
   function toggleUserRecipeStatus(
     id: string,
     whichStatus: UserDataStatus
@@ -97,7 +119,7 @@ export function DataContextProvider(props: { children: React.ReactNode }) {
           id: recipe.id,
           recipe,
           likeCount: liked ? 1 : 0,
-          comments: [],
+          comments: {},
           lastInteraction: new Date(),
         },
       };
@@ -126,9 +148,27 @@ export function DataContextProvider(props: { children: React.ReactNode }) {
       };
     });
   }
-  function postComment() {}
-  function updateComment() {}
-  function deleteComment() {}
+
+  //comment functions
+  function postComment(
+    userID: string,
+    recipeID: string,
+    comment: string,
+    commentID?: string
+  ) {
+    console.log(userID + " " + recipeID + " " + comment);
+  }
+  function updateComment(
+    recipeID: string,
+    commentID: string,
+    comment: string,
+    replyID?: string
+  ) {}
+  function deleteComment(
+    recipeID: string,
+    commentID: string,
+    replyID?: string
+  ) {}
 
   //save
   React.useEffect(() => {
@@ -147,6 +187,9 @@ export function DataContextProvider(props: { children: React.ReactNode }) {
         getRecipeMetaData,
         updateRecipeLikes,
         getFavoriteRecipes,
+        postComment,
+        updateComment,
+        deleteComment,
       }}
     >
       {props.children}

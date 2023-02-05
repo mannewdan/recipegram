@@ -50,7 +50,7 @@ export default function CommentsPopup({
               <Comment />
             </div>
 
-            <CommentBar />
+            <CommentBar recipeID={recipe.id} />
           </div>
         </div>
       </div>
