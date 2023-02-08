@@ -77,32 +77,16 @@ img {
   font-size: 1.75rem;
 }
 .icon.pulse {
-  -webkit-animation-name: pulse;
-          animation-name: pulse;
-  -webkit-animation-duration: 150ms;
-          animation-duration: 150ms;
-  -webkit-animation-fill-mode: forwards;
-          animation-fill-mode: forwards;
-  -webkit-animation-timing-function: ease-out;
-          animation-timing-function: ease-out;
+  animation-name: pulse;
+  animation-duration: 150ms;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-out;
 }
 .icon.fa-solid.fa-star {
   color: hsl(40deg, 100%, 60%);
 }
 .icon.fa-solid.fa-heart {
   color: hsl(0deg, 84%, 64%);
-}
-
-@-webkit-keyframes pulse {
-  0% {
-    font-size: 1.5rem;
-  }
-  50% {
-    font-size: 2.25rem;
-  }
-  100% {
-    font-size: 1.75rem;
-  }
 }
 
 @keyframes pulse {
@@ -119,7 +103,6 @@ img {
 .unselectable {
   -webkit-user-select: none;
      -moz-user-select: none;
-      -ms-user-select: none;
           user-select: none;
 }
 
@@ -512,7 +495,7 @@ footer a {
 .comment-content__interactions span {
   font-size: 0.85rem;
   color: hsl(0deg, 0%, 55%);
-  cursor: pointer;
+  cursor: default;
 }
 .comment-content__interactions--button {
   font-size: 0.9rem;
@@ -528,7 +511,7 @@ footer a {
 }
 .comment-content__interactions--button.replies-toggle {
   color: hsl(0deg, 0%, 55%);
-  padding: 1em 0;
+  margin: 1em 0;
 }
 .comment-content__interactions--likes {
   font-weight: 700;
@@ -556,9 +539,6 @@ footer a {
   outline: none;
 }
 .comment-bar input::-moz-placeholder {
-  color: hsl(0deg, 0%, 85%);
-}
-.comment-bar input:-ms-input-placeholder {
   color: hsl(0deg, 0%, 85%);
 }
 .comment-bar input::placeholder {

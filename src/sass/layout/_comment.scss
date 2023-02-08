@@ -38,7 +38,7 @@
     span {
       font-size: 0.85rem;
       color: $dark-gray;
-      cursor: pointer;
+      cursor: default;
     }
     &--button {
       font-size: 0.9rem;
@@ -54,7 +54,7 @@
       }
       &.replies-toggle {
         color: $dark-gray;
-        padding: 1em 0;
+        margin: 1em 0;
       }
     }
     &--likes {

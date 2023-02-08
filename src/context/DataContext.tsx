@@ -162,9 +162,10 @@ export function DataContextProvider(props: { children: React.ReactNode }) {
     comment: string,
     commentID?: string
   ) {
-    if (false) {
+    if (commentID && false) {
       //if commentID is defined and exists within the recipe, post this as a reply
     } else {
+      //create comment
       const newComment = {
         id: uuid(),
         recipeID,
@@ -175,6 +176,7 @@ export function DataContextProvider(props: { children: React.ReactNode }) {
         replies: {},
       };
 
+      //save comment
       setRecipeData((prev) => {
         return {
           ...prev,
@@ -199,7 +201,26 @@ export function DataContextProvider(props: { children: React.ReactNode }) {
     recipeID: string,
     commentID: string,
     replyID?: string
-  ) {}
+  ) {
+    if (replyID && false) {
+      //if replyID is defined, then only delete the reply with that ID
+    } else {
+      //delete the comment, including all replies
+      setRecipeData((prev) => {
+        return {
+          ...prev,
+          [recipeID]: {
+            ...prev[recipeID],
+            comments: (function () {
+              const newComments = { ...prev[recipeID].comments };
+              delete newComments[commentID];
+              return newComments;
+            })(),
+          },
+        };
+      });
+    }
+  }
   function getComments(
     recipeID: string
   ): { [key: string]: CommentDataT } | undefined {
