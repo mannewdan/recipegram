@@ -98,10 +98,7 @@ export default function Comment({ commentData }: CommentProps) {
                   </button>
                   <button
                     onClick={() => {
-                      deleteComment(
-                        commentData.recipeID + " lol",
-                        commentData.id
-                      );
+                      deleteComment(commentData.recipeID, commentData.id);
                     }}
                     className="comment-content__interactions--button red"
                   >
