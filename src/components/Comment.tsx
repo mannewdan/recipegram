@@ -1,5 +1,6 @@
 import React from "react";
 import { CommentDataT } from "../context/DataContext";
+import ReactTimeAgo from "react-time-ago";
 
 type CommentProps = {
   commentData: CommentDataT;
@@ -26,7 +27,9 @@ export default function Comment({ commentData }: CommentProps) {
         </div>
         <div className="comment-content__interactions">
           <div>
-            <span className="comment-content__interactions--time">12d</span>
+            <span className="comment-content__interactions--time">
+              {<ReactTimeAgo date={commentData.time} timeStyle={"round"} />}
+            </span>
             <span className="comment-content__interactions--like-count">
               {likesLabel}
             </span>
