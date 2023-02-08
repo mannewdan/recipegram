@@ -24,6 +24,7 @@ export type CommentDataT = {
   content: string;
   time: Date;
   likeCount: number;
+  edited?: boolean;
   replies: { [key: string]: ReplyDataT };
 };
 type ReplyDataT = {
@@ -34,6 +35,7 @@ type ReplyDataT = {
   content: string;
   time: Date;
   likeCount: number;
+  edited?: boolean;
 };
 type DataContextT = {
   toggleUserRecipeStatus: (id: string, whichStatus: UserDataStatus) => boolean;
@@ -196,7 +198,29 @@ export function DataContextProvider(props: { children: React.ReactNode }) {
     commentID: string,
     comment: string,
     replyID?: string
-  ) {}
+  ) {
+    if (replyID && false) {
+      //if replyID is defined, then update the reply with that ID
+    } else {
+      //update the comment
+      setRecipeData((prev) => {
+        try {
+          const newData = { ...prev };
+
+          newData[recipeID].comments[commentID].edited =
+            newData[recipeID].comments[commentID].content !== comment;
+
+          newData[recipeID].comments[commentID].content = comment;
+          return newData;
+        } catch {
+          console.log(
+            "Failed to update comment: " + recipeID + ", " + commentID
+          );
+          return prev;
+        }
+      });
+    }
+  }
   function deleteComment(
     recipeID: string,
     commentID: string,
@@ -207,17 +231,16 @@ export function DataContextProvider(props: { children: React.ReactNode }) {
     } else {
       //delete the comment, including all replies
       setRecipeData((prev) => {
-        return {
-          ...prev,
-          [recipeID]: {
-            ...prev[recipeID],
-            comments: (function () {
-              const newComments = { ...prev[recipeID].comments };
-              delete newComments[commentID];
-              return newComments;
-            })(),
-          },
-        };
+        try {
+          const newData = { ...prev };
+          delete newData[recipeID].comments[commentID];
+          return newData;
+        } catch {
+          console.log(
+            "Failed to delete comment: " + recipeID + ", " + commentID
+          );
+          return prev;
+        }
       });
     }
   }

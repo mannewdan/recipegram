@@ -10,8 +10,9 @@ type CommentProps = {
 export default function Comment({ commentData }: CommentProps) {
   const [showReplies, setShowReplies] = React.useState(false);
   const [isEditing, setIsEditing] = React.useState(false);
+  const [edit, setEdit] = React.useState("");
   const [isDeleting, setIsDeleting] = React.useState(false);
-  const { deleteComment } = useDataContext();
+  const { updateComment, deleteComment } = useDataContext();
 
   const isUser = commentData.userID === "user";
 
@@ -37,7 +38,7 @@ export default function Comment({ commentData }: CommentProps) {
             </>
           )}
           {isEditing && (
-            <textarea defaultValue={commentData.content}></textarea>
+            <textarea onChange={(e) => setEdit(e.target.value)} value={edit} />
           )}
         </div>
 
@@ -50,6 +51,7 @@ export default function Comment({ commentData }: CommentProps) {
                   onClick={() => {
                     setIsEditing(true);
                     setIsDeleting(false);
+                    setEdit(commentData.content);
                   }}
                   className="comment-content__interactions--button"
                 >
@@ -58,7 +60,13 @@ export default function Comment({ commentData }: CommentProps) {
               )}
               {isEditing && (
                 <>
-                  <button className="comment-content__interactions--button">
+                  <button
+                    onClick={() => {
+                      updateComment(commentData.recipeID, commentData.id, edit);
+                      setIsEditing(false);
+                    }}
+                    className="comment-content__interactions--button"
+                  >
                     Save
                   </button>
                   <button
@@ -90,7 +98,10 @@ export default function Comment({ commentData }: CommentProps) {
                   </button>
                   <button
                     onClick={() => {
-                      deleteComment(commentData.recipeID, commentData.id);
+                      deleteComment(
+                        commentData.recipeID + " lol",
+                        commentData.id
+                      );
                     }}
                     className="comment-content__interactions--button red"
                   >
@@ -123,6 +134,7 @@ export default function Comment({ commentData }: CommentProps) {
                     timeStyle={"round"}
                   />
                 }
+                {commentData.edited && " (edited)"}
               </span>
             </div>
           )}
