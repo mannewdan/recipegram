@@ -26,70 +26,106 @@ export default function Comment({ commentData }: CommentProps) {
       <div className="comment-content">
         {/* Username & Comment */}
         <div>
-          <strong className="comment-content__username">
-            {commentData.userID}
-          </strong>
-          <span className="comment-content__comment">
-            {commentData.content}
-          </span>
+          {!isEditing && (
+            <>
+              <strong className="comment-content__username">
+                {commentData.userID}
+              </strong>
+              <span className="comment-content__comment">
+                {commentData.content}
+              </span>
+            </>
+          )}
+          {isEditing && (
+            <textarea defaultValue={commentData.content}></textarea>
+          )}
         </div>
 
         <div className="comment-content__buttons">
-          {/* Reply, Edit, Delete, Likes, Time */}
-          <div className="comment-content__interactions">
-            <button className="comment-content__interactions--button">
-              Reply
-            </button>
-            {isUser && (
-              <>
-                <button className="comment-content__interactions--button">
+          {isUser && (
+            <div className="comment-content__user-control">
+              {/* Edit */}
+              {!isEditing && (
+                <button
+                  onClick={() => {
+                    setIsEditing(true);
+                    setIsDeleting(false);
+                  }}
+                  className="comment-content__interactions--button"
+                >
                   Edit
                 </button>
-                {!isDeleting && (
-                  <button
-                    onClick={() => setIsDeleting(true)}
-                    className="comment-content__interactions--button delete"
-                  >
-                    Delete
+              )}
+              {isEditing && (
+                <>
+                  <button className="comment-content__interactions--button">
+                    Save
                   </button>
-                )}
-                {isDeleting && (
-                  <>
-                    <span>You sure?</span>
-                    <button
-                      onClick={() => setIsDeleting(false)}
-                      className="comment-content__interactions--button"
-                    >
-                      No
-                    </button>
-                    <button
-                      onClick={() => {
-                        deleteComment(commentData.recipeID, commentData.id);
-                      }}
-                      className="comment-content__interactions--button delete"
-                    >
-                      Yes
-                    </button>
-                  </>
-                )}
-              </>
-            )}
+                  <button
+                    onClick={() => setIsEditing(false)}
+                    className="comment-content__interactions--button cancel"
+                  >
+                    Cancel
+                  </button>
+                </>
+              )}
 
-            {commentData.likeCount > 0 && (
-              <span className="comment-content__interactions--likes">
-                {likesLabel}
+              {/* Delete */}
+              {!isEditing && !isDeleting && (
+                <button
+                  onClick={() => setIsDeleting(true)}
+                  className="comment-content__interactions--button delete"
+                >
+                  Delete
+                </button>
+              )}
+              {!isEditing && isDeleting && (
+                <>
+                  <span>You sure?</span>
+                  <button
+                    onClick={() => setIsDeleting(false)}
+                    className="comment-content__interactions--button"
+                  >
+                    No
+                  </button>
+                  <button
+                    onClick={() => {
+                      deleteComment(commentData.recipeID, commentData.id);
+                    }}
+                    className="comment-content__interactions--button red"
+                  >
+                    Yes
+                  </button>
+                </>
+              )}
+            </div>
+          )}
+
+          {!isEditing && (
+            <div className="comment-content__interactions">
+              {/* Reply */}
+              <button className="comment-content__interactions--button">
+                Reply
+              </button>
+
+              {/* Likes */}
+              {commentData.likeCount > 0 && (
+                <span className="comment-content__interactions--likes">
+                  {likesLabel}
+                </span>
+              )}
+
+              {/* Time */}
+              <span className="comment-content__interactions--time">
+                {
+                  <ReactTimeAgo
+                    date={new Date(commentData.time)}
+                    timeStyle={"round"}
+                  />
+                }
               </span>
-            )}
-
-            <span className="comment-content__interactions--time">
-              {
-                <ReactTimeAgo
-                  date={new Date(commentData.time)}
-                  timeStyle={"round"}
-                />
-              }
-            </span>
-          </div>
+            </div>
+          )}
 
           {/* View Replies */}
           <div>
@@ -101,7 +137,7 @@ export default function Comment({ commentData }: CommentProps) {
       </div>
 
       {/* Like Button */}
-      <div className="comment-like">{"<3"}</div>
+      {!isEditing && <div className="comment-like">{"<3"}</div>}
     </div>
   );
 }

@@ -19,7 +19,8 @@
   font-size: 14px;
 }
 
-button {
+button,
+textarea {
   font-family: "Rubik", sans-serif;
 }
 
@@ -478,6 +479,14 @@ footer a {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  width: 100%;
+}
+.comment-content textarea {
+  width: 100%;
+  max-width: 100%;
+  height: 4em;
+  outline: none;
+  border-color: hsl(0deg, 0%, 85%);
 }
 .comment-content__username {
   margin-right: 6px;
@@ -507,7 +516,14 @@ footer a {
   cursor: pointer;
 }
 .comment-content__interactions--button.delete {
+  color: hsl(0deg, 0%, 55%);
+}
+.comment-content__interactions--button.red {
   color: hsl(0deg, 84%, 64%);
+}
+.comment-content__interactions--button.cancel {
+  color: hsl(0deg, 0%, 55%);
+  font-weight: 400;
 }
 .comment-content__interactions--button.replies-toggle {
   color: hsl(0deg, 0%, 55%);
@@ -515,6 +531,16 @@ footer a {
 }
 .comment-content__interactions--likes {
   font-weight: 700;
+}
+.comment-content__user-control {
+  display: flex;
+  gap: 6px;
+  margin-top: 0.4em;
+}
+.comment-content__user-control span {
+  font-size: 0.85rem;
+  color: hsl(0deg, 0%, 55%);
+  cursor: default;
 }
 
 .comment-like {
