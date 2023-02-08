@@ -19,6 +19,10 @@
   font-size: 14px;
 }
 
+button {
+  font-family: "Rubik", sans-serif;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -468,7 +472,6 @@ footer a {
   display: flex;
   flex-direction: column;
   padding: 12px;
-  gap: 16px;
   height: calc(100% - 50px);
   overflow-y: scroll;
 }
@@ -476,6 +479,15 @@ footer a {
 .comment-container {
   display: flex;
   justify-content: space-between;
+  margin: 0.5em 0;
+  border-bottom: 1px solid #ebebeb;
+}
+.comment-container:last-of-type {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+.comment-container:first-of-type {
+  margin-top: 0;
 }
 
 .comment-content {
@@ -486,6 +498,40 @@ footer a {
 }
 .comment-content__username {
   margin-right: 6px;
+}
+.comment-content__buttons {
+  display: flex;
+  flex-direction: column;
+}
+.comment-content__interactions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+}
+.comment-content__interactions span {
+  font-size: 0.85rem;
+  color: hsl(0deg, 0%, 55%);
+  cursor: pointer;
+}
+.comment-content__interactions--button {
+  font-size: 0.9rem;
+  color: #778aeb;
+  font-weight: 700;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.comment-content__interactions--button.delete {
+  color: hsl(0deg, 84%, 64%);
+}
+.comment-content__interactions--button.replies-toggle {
+  color: hsl(0deg, 0%, 55%);
+  padding: 1em 0;
+}
+.comment-content__interactions--likes {
+  font-weight: 700;
 }
 
 .comment-like {

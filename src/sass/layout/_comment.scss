@@ -3,6 +3,17 @@
 .comment-container {
   display: flex;
   justify-content: space-between;
+
+  margin: 0.5em 0;
+
+  border-bottom: 1px solid darken($white-gray, 5%);
+  &:last-of-type {
+    border-bottom: none;
+    margin-bottom: 0;
+  }
+  &:first-of-type {
+    margin-top: 0;
+  }
 }
 .comment-content {
   border-radius: 3px;
@@ -13,6 +24,42 @@
 
   &__username {
     margin-right: 6px;
+  }
+  &__buttons {
+    display: flex;
+    flex-direction: column;
+  }
+  &__interactions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 6px;
+
+    span {
+      font-size: 0.85rem;
+      color: $dark-gray;
+      cursor: pointer;
+    }
+    &--button {
+      font-size: 0.9rem;
+      color: $accent-light;
+      font-weight: 700;
+      padding: 0;
+      background: none;
+      border: none;
+      cursor: pointer;
+
+      &.delete {
+        color: $red-heart;
+      }
+      &.replies-toggle {
+        color: $dark-gray;
+        padding: 1em 0;
+      }
+    }
+    &--likes {
+      font-weight: 700;
+    }
   }
 }
 .comment-like {

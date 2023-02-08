@@ -11,8 +11,9 @@ export default function Comment({ commentData }: CommentProps) {
 
   const likesLabel =
     commentData.likeCount > 0
-      ? commentData.likeCount + (commentData.likeCount > 1 ? " Likes" : " Like")
+      ? commentData.likeCount + (commentData.likeCount > 1 ? " likes" : " like")
       : "";
+  const isUser = commentData.userID === "user";
 
   return (
     <div className="comment-container">
@@ -25,21 +26,35 @@ export default function Comment({ commentData }: CommentProps) {
             {commentData.content}
           </span>
         </div>
-        <div className="comment-content__interactions">
-          <div>
+        <div className="comment-content__buttons">
+          <div className="comment-content__interactions">
+            <button className="comment-content__interactions--button">
+              Reply
+            </button>
+            {isUser && (
+              <>
+                <button className="comment-content__interactions--button">
+                  Edit
+                </button>
+                <button className="comment-content__interactions--button delete">
+                  Delete
+                </button>
+              </>
+            )}
+
+            {commentData.likeCount > 0 && (
+              <span className="comment-content__interactions--likes">
+                {likesLabel}
+              </span>
+            )}
+
             <span className="comment-content__interactions--time">
               {<ReactTimeAgo date={commentData.time} timeStyle={"round"} />}
             </span>
-            <span className="comment-content__interactions--like-count">
-              {likesLabel}
-            </span>
-            <button className="comment-content__interactions--reply-button">
-              Reply
-            </button>
           </div>
           <div>
-            <button className="comment-content__interactions--replies-toggle">
-              — View replies
+            <button className="comment-content__interactions--button replies-toggle">
+              — View replies (1)
             </button>
           </div>
         </div>

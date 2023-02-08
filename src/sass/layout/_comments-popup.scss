@@ -73,7 +73,7 @@ $title-height: 48px;
     display: flex;
     flex-direction: column;
     padding: 12px;
-    gap: 16px;
+
     height: calc(100% - $comment-bar-height);
 
     overflow-y: scroll;
