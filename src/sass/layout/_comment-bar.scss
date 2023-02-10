@@ -4,12 +4,22 @@
 .comment-bar {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 
   height: $comment-bar-height;
   border-top: 1px solid $gray;
 
+  padding-left: 6px;
+
+  .reply-tag {
+    background-color: $accent-light;
+    color: $white;
+    padding: 4px 8px 4px 6px;
+    border-radius: 4px;
+  }
+
   input {
-    padding: 0 6px 0 14px;
+    padding: 0 6px 0 8px;
     width: 100%;
     border: none;
     border-bottom-left-radius: 6px;

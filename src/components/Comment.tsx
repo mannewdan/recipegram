@@ -5,9 +5,10 @@ import { useDataContext } from "../context/DataContext";
 
 type CommentProps = {
   commentData: CommentDataT;
+  setReplyingTo: (data: { id: string; user: string }) => void;
 };
 
-export default function Comment({ commentData }: CommentProps) {
+export default function Comment({ commentData, setReplyingTo }: CommentProps) {
   const [showReplies, setShowReplies] = React.useState(false);
   const [isEditing, setIsEditing] = React.useState(false);
   const [edit, setEdit] = React.useState("");
@@ -112,7 +113,15 @@ export default function Comment({ commentData }: CommentProps) {
           {!isEditing && (
             <div className="comment-content__interactions">
               {/* Reply */}
-              <button className="comment-content__interactions--button">
+              <button
+                onClick={() =>
+                  setReplyingTo({
+                    id: commentData.id,
+                    user: commentData.userID,
+                  })
+                }
+                className="comment-content__interactions--button"
+              >
                 Reply
               </button>
 

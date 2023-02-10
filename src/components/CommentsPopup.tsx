@@ -1,3 +1,4 @@
+import React from "react";
 import { RecipeT } from "./Recipe";
 import Comment from "./Comment";
 import RecipeSimplified from "./RecipeSimplified";
@@ -14,14 +15,29 @@ export default function CommentsPopup({
   closeComments,
 }: CommentsPopupProps) {
   const comments = useDataContext().getComments(recipe.id);
+  const [replyingTo, setReplyingTo] = React.useState<
+    { id: string; user: string } | undefined
+  >(undefined);
+
+  //functions
+  function clearReplyingTo() {
+    setReplyingTo(undefined);
+  }
+
+  //rendering
   const commentEls = !comments ? (
     <></>
   ) : (
     Object.values(comments).map((comment) => {
-      return <Comment key={comment.id} commentData={comment} />;
+      return (
+        <Comment
+          key={comment.id}
+          commentData={comment}
+          setReplyingTo={setReplyingTo}
+        />
+      );
     })
   );
-
   return (
     <div className="comments-container">
       {/* Background */}
@@ -52,7 +68,11 @@ export default function CommentsPopup({
           <div className="comments__posts-section">
             <div className="comments__posts-container">{commentEls}</div>
 
-            <CommentBar recipeID={recipe.id} />
+            <CommentBar
+              recipeID={recipe.id}
+              replyingTo={replyingTo}
+              clearReplyingTo={clearReplyingTo}
+            />
           </div>
         </div>
       </div>

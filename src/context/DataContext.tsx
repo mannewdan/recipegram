@@ -164,8 +164,9 @@ export function DataContextProvider(props: { children: React.ReactNode }) {
     comment: string,
     commentID?: string
   ) {
-    if (commentID && false) {
+    if (commentID && recipeData[recipeID]?.comments[commentID]) {
       //if commentID is defined and exists within the recipe, post this as a reply
+      console.log("posted a reply");
     } else {
       //create comment
       const newComment = {
