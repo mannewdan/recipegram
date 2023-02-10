@@ -21,7 +21,7 @@ export default function CommentBar({
     if (inputRef.current) inputRef.current.value = "";
   }
   React.useEffect(() => {
-    if (inputRef.current) inputRef.current.focus();
+    if (replyingTo && inputRef.current) inputRef.current.focus();
   }, [replyingTo]);
 
   return (
