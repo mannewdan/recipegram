@@ -28,16 +28,22 @@ export default function CommentsPopup({
   const commentEls = !comments ? (
     <></>
   ) : (
-    Object.values(comments).map((comment) => {
-      return (
-        <Comment
-          key={comment.id}
-          commentData={comment}
-          setReplyingTo={setReplyingTo}
-        />
-      );
-    })
+    (() => {
+      const values = Object.values(comments);
+      const els = [];
+      for (let i = values.length - 1; i >= 0; i--) {
+        els.push(
+          <Comment
+            key={values[i].id}
+            commentData={values[i]}
+            setReplyingTo={setReplyingTo}
+          />
+        );
+      }
+      return els;
+    })()
   );
+
   return (
     <div className="comments-container">
       {/* Background */}

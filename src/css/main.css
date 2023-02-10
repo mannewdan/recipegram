@@ -464,6 +464,7 @@ footer a {
   display: flex;
   justify-content: space-between;
   margin: 0.5em 0;
+  padding-bottom: 1em;
   border-bottom: 1px solid #ebebeb;
 }
 .comment-container:last-of-type {
@@ -541,6 +542,17 @@ footer a {
   font-size: 0.85rem;
   color: hsl(0deg, 0%, 55%);
   cursor: default;
+}
+.comment-content__replies-container {
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.comment-content__replies-container .comment-container {
+  border-bottom: none;
+  margin: 0;
+  padding: 0;
 }
 
 .comment-like {

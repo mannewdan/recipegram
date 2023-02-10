@@ -23,6 +23,23 @@ export default function Comment({ commentData, setReplyingTo }: CommentProps) {
       ? commentData.likeCount + (commentData.likeCount > 1 ? " likes" : " like")
       : "";
 
+  const replyEls = commentData.replies
+    ? (() => {
+        const values = Object.values(commentData.replies);
+        const els = [];
+        for (let i = values.length - 1; i >= 0; i--) {
+          els.push(
+            <Comment
+              key={values[i].id}
+              commentData={values[i]}
+              setReplyingTo={setReplyingTo}
+            />
+          );
+        }
+        return els;
+      })()
+    : [];
+
   return (
     <div className="comment-container">
       <div className="comment-content">
@@ -146,11 +163,22 @@ export default function Comment({ commentData, setReplyingTo }: CommentProps) {
           )}
 
           {/* View Replies */}
-          <div>
-            <button className="comment-content__interactions--button replies-toggle">
-              — View replies (1)
-            </button>
-          </div>
+          {replyEls.length > 0 && (
+            <div>
+              <button
+                onClick={() => setShowReplies((prev) => !prev)}
+                className="comment-content__interactions--button replies-toggle"
+              >
+                {!showReplies && <>— View replies ({replyEls.length})</>}
+                {showReplies && <>— Hide Replies</>}
+              </button>
+              {showReplies && (
+                <div className="comment-content__replies-container">
+                  {replyEls}
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </div>
 

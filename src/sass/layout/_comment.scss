@@ -5,6 +5,7 @@
   justify-content: space-between;
 
   margin: 0.5em 0;
+  padding-bottom: 1em;
 
   border-bottom: 1px solid darken($white-gray, 5%);
   &:last-of-type {
@@ -86,6 +87,19 @@
       font-size: 0.85rem;
       color: $dark-gray;
       cursor: default;
+    }
+  }
+  &__replies-container {
+    padding-left: 20px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    .comment-container {
+      border-bottom: none;
+      margin: 0;
+      padding: 0;
     }
   }
 }

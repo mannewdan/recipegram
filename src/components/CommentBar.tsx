@@ -50,7 +50,7 @@ export default function CommentBar({
           e.preventDefault();
           if (!text) return;
 
-          postComment("user", recipeID, text, replyingTo?.id);
+          postComment("user", recipeID, text, replyingTo);
           resetField();
           clearReplyingTo();
         }}

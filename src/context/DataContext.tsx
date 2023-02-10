@@ -25,17 +25,9 @@ export type CommentDataT = {
   time: Date;
   likeCount: number;
   edited?: boolean;
-  replies: { [key: string]: ReplyDataT };
-};
-type ReplyDataT = {
-  id: string;
-  recipeID: string;
-  commentID: string;
-  userID: string;
-  content: string;
-  time: Date;
-  likeCount: number;
-  edited?: boolean;
+  replies: { [key: string]: CommentDataT };
+  replyingToUser?: string; //the name of the user being replied to
+  replyingToComment?: string; //the ID of the comment this reply is nested under
 };
 type DataContextT = {
   toggleUserRecipeStatus: (id: string, whichStatus: UserDataStatus) => boolean;
@@ -51,7 +43,7 @@ type DataContextT = {
     userID: string,
     recipeID: string,
     comment: string,
-    commentID?: string
+    replyingTo?: { id: string; user: string }
   ) => void;
   updateComment: (
     recipeID: string,
@@ -162,11 +154,38 @@ export function DataContextProvider(props: { children: React.ReactNode }) {
     userID: string,
     recipeID: string,
     comment: string,
-    commentID?: string
+    replyingTo?: { id: string; user: string }
   ) {
-    if (commentID && recipeData[recipeID]?.comments[commentID]) {
-      //if commentID is defined and exists within the recipe, post this as a reply
-      console.log("posted a reply");
+    if (replyingTo && recipeData[recipeID]?.comments[replyingTo.id]) {
+      //create reply
+      const newReply = {
+        id: uuid(),
+        recipeID,
+        userID,
+        content: comment,
+        time: new Date(),
+        likeCount: 0,
+        replies: {},
+        replyingToUser: replyingTo.user,
+        replyingToComment: replyingTo.id,
+      };
+
+      //save reply
+      setRecipeData((prev) => {
+        try {
+          const newData = { ...prev };
+
+          newData[recipeID].comments[replyingTo.id].replies[newReply.id] =
+            newReply;
+
+          return newData;
+        } catch {
+          console.log(
+            "Failed to post reply to: " + recipeID + " " + replyingTo.id
+          );
+          return prev;
+        }
+      });
     } else {
       //create comment
       const newComment = {
@@ -181,16 +200,14 @@ export function DataContextProvider(props: { children: React.ReactNode }) {
 
       //save comment
       setRecipeData((prev) => {
-        return {
-          ...prev,
-          [recipeID]: {
-            ...prev[recipeID],
-            comments: {
-              ...prev[recipeID].comments,
-              [newComment.id]: newComment,
-            },
-          },
-        };
+        try {
+          const newData = { ...prev };
+          newData[recipeID].comments[newComment.id] = newComment;
+          return newData;
+        } catch {
+          console.log("Failed to post comment to: " + recipeID);
+          return prev;
+        }
       });
     }
   }
