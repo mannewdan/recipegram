@@ -528,7 +528,7 @@ footer a {
 }
 .comment-content__interactions--button.replies-toggle {
   color: hsl(0deg, 0%, 55%);
-  margin: 1em 0;
+  margin-top: 1em;
 }
 .comment-content__interactions--likes {
   font-weight: 700;
@@ -551,7 +551,7 @@ footer a {
 }
 .comment-content__replies-container .comment-container {
   border-bottom: none;
-  margin: 0;
+  margin: 0.5em 0 0 0;
   padding: 0;
 }
 

@@ -116,7 +116,17 @@ export default function Comment({ commentData, setReplyingTo }: CommentProps) {
                   </button>
                   <button
                     onClick={() => {
-                      deleteComment(commentData.recipeID, commentData.id);
+                      if (commentData.replyingToComment) {
+                        //delete reply
+                        deleteComment(
+                          commentData.recipeID,
+                          commentData.replyingToComment,
+                          commentData.id
+                        );
+                      } else {
+                        //delete comment
+                        deleteComment(commentData.recipeID, commentData.id);
+                      }
                     }}
                     className="comment-content__interactions--button red"
                   >

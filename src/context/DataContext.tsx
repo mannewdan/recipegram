@@ -244,8 +244,29 @@ export function DataContextProvider(props: { children: React.ReactNode }) {
     commentID: string,
     replyID?: string
   ) {
-    if (replyID && false) {
+    if (
+      replyID &&
+      recipeData[recipeID]?.comments[commentID]?.replies[replyID]
+    ) {
       //if replyID is defined, then only delete the reply with that ID
+      console.log("deleting a reply");
+      setRecipeData((prev) => {
+        try {
+          const newData = { ...prev };
+          delete newData[recipeID].comments[commentID].replies[replyID];
+          return newData;
+        } catch {
+          console.log(
+            "Failed to delete reply: " +
+              recipeID +
+              ", " +
+              commentID +
+              ", " +
+              replyID
+          );
+          return prev;
+        }
+      });
     } else {
       //delete the comment, including all replies
       setRecipeData((prev) => {

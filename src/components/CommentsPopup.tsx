@@ -76,6 +76,7 @@ export default function CommentsPopup({
 
             <CommentBar
               recipeID={recipe.id}
+              recipeData={recipe}
               replyingTo={replyingTo}
               clearReplyingTo={clearReplyingTo}
             />

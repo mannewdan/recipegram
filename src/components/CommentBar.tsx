@@ -1,19 +1,22 @@
 import React from "react";
 import { useDataContext } from "../context/DataContext";
+import { RecipeT } from "./Recipe";
 
 type CommentBarProps = {
   recipeID: string;
-  replyingTo: { id: string; user: string } | undefined;
-  clearReplyingTo: () => void;
+  recipeData: RecipeT;
+  replyingTo?: { id: string; user: string };
+  clearReplyingTo?: () => void;
 };
 
 export default function CommentBar({
   recipeID,
+  recipeData,
   replyingTo,
   clearReplyingTo,
 }: CommentBarProps) {
   const [text, setText] = React.useState("");
-  const { postComment } = useDataContext();
+  const { addRecipeData, postComment } = useDataContext();
   const inputRef = React.useRef<HTMLInputElement>(null);
 
   function resetField() {
@@ -38,7 +41,7 @@ export default function CommentBar({
         onKeyDown={(e) => {
           const key = e.key;
           if (!inputRef.current?.value && key === "Backspace") {
-            clearReplyingTo();
+            if (clearReplyingTo) clearReplyingTo();
           }
         }}
         type="text"
@@ -50,9 +53,10 @@ export default function CommentBar({
           e.preventDefault();
           if (!text) return;
 
+          addRecipeData(recipeData);
           postComment("user", recipeID, text, replyingTo);
           resetField();
-          clearReplyingTo();
+          if (clearReplyingTo) clearReplyingTo();
         }}
       >
         Post

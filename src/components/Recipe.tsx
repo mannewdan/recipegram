@@ -179,7 +179,7 @@ export default function Recipe({ recipe }: RecipeProps) {
         >
           View 1 comment
         </button>
-        <CommentBar recipeID={recipe.id} />
+        <CommentBar recipeID={recipe.id} recipeData={recipe} />
       </div>
     </div>
   );
