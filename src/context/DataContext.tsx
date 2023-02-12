@@ -2,6 +2,8 @@ import React from "react";
 import { RecipeT } from "../components/Recipe";
 import { v4 as uuid } from "uuid";
 
+const username = "bob";
+
 type UserDataT = {
   likes: { [key: string]: boolean };
   favorites: { [key: string]: boolean };
@@ -30,6 +32,7 @@ export type CommentDataT = {
   replyingToComment?: string; //the ID of the comment this reply is nested under
 };
 type DataContextT = {
+  getCurrentUser: () => string;
   toggleUserRecipeStatus: (id: string, whichStatus: UserDataStatus) => boolean;
   isUserRecipeStatusPositive: (
     id: string,
@@ -81,6 +84,11 @@ export function DataContextProvider(props: { children: React.ReactNode }) {
   });
 
   console.log(recipeData);
+
+  //meta functions
+  function getCurrentUser(): string {
+    return username;
+  }
 
   //recipe functions
   function toggleUserRecipeStatus(
@@ -326,6 +334,7 @@ export function DataContextProvider(props: { children: React.ReactNode }) {
   return (
     <Context.Provider
       value={{
+        getCurrentUser,
         toggleUserRecipeStatus,
         isUserRecipeStatusPositive,
         addRecipeData,

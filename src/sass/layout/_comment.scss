@@ -35,6 +35,15 @@
   &__username {
     margin-right: 6px;
   }
+  &__comment {
+    &--replying-to {
+      background-color: $accent-light;
+      color: $white;
+      padding: 2px 4px 2px 3px;
+      margin-right: 3px;
+      border-radius: 4px;
+    }
+  }
   &__buttons {
     display: flex;
     flex-direction: column;

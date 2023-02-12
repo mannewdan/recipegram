@@ -492,6 +492,13 @@ footer a {
 .comment-content__username {
   margin-right: 6px;
 }
+.comment-content__comment--replying-to {
+  background-color: #778aeb;
+  color: hsl(0deg, 0%, 100%);
+  padding: 2px 4px 2px 3px;
+  margin-right: 3px;
+  border-radius: 4px;
+}
 .comment-content__buttons {
   display: flex;
   flex-direction: column;

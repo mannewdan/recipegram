@@ -13,9 +13,9 @@ export default function Comment({ commentData, setReplyingTo }: CommentProps) {
   const [isEditing, setIsEditing] = React.useState(false);
   const [edit, setEdit] = React.useState("");
   const [isDeleting, setIsDeleting] = React.useState(false);
-  const { updateComment, deleteComment } = useDataContext();
+  const { getCurrentUser, updateComment, deleteComment } = useDataContext();
 
-  const isUser = commentData.userID === "user";
+  const isUser = commentData.userID === getCurrentUser();
 
   //rendering
   const likesLabel =
@@ -51,6 +51,11 @@ export default function Comment({ commentData, setReplyingTo }: CommentProps) {
                 {commentData.userID}
               </strong>
               <span className="comment-content__comment">
+                {commentData.replyingToUser && (
+                  <span className="comment-content__comment--replying-to unselectable">
+                    @{commentData.replyingToUser}
+                  </span>
+                )}
                 {commentData.content}
               </span>
             </>
@@ -154,12 +159,19 @@ export default function Comment({ commentData, setReplyingTo }: CommentProps) {
             <div className="comment-content__interactions">
               {/* Reply */}
               <button
-                onClick={() =>
-                  setReplyingTo({
-                    id: commentData.id,
-                    user: commentData.userID,
-                  })
-                }
+                onClick={() => {
+                  if (commentData.replyingToComment) {
+                    setReplyingTo({
+                      id: commentData.replyingToComment,
+                      user: commentData.userID,
+                    });
+                  } else {
+                    setReplyingTo({
+                      id: commentData.id,
+                      user: commentData.userID,
+                    });
+                  }
+                }}
                 className="comment-content__interactions--button"
               >
                 Reply

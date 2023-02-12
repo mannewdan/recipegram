@@ -16,7 +16,7 @@ export default function CommentBar({
   clearReplyingTo,
 }: CommentBarProps) {
   const [text, setText] = React.useState("");
-  const { addRecipeData, postComment } = useDataContext();
+  const { getCurrentUser, addRecipeData, postComment } = useDataContext();
   const inputRef = React.useRef<HTMLInputElement>(null);
 
   function resetField() {
@@ -54,7 +54,7 @@ export default function CommentBar({
           if (!text) return;
 
           addRecipeData(recipeData);
-          postComment("user", recipeID, text, replyingTo);
+          postComment(getCurrentUser(), recipeID, text, replyingTo);
           resetField();
           if (clearReplyingTo) clearReplyingTo();
         }}
