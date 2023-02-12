@@ -80,7 +80,20 @@ export default function Comment({ commentData, setReplyingTo }: CommentProps) {
                 <>
                   <button
                     onClick={() => {
-                      updateComment(commentData.recipeID, commentData.id, edit);
+                      if (commentData.replyingToComment) {
+                        updateComment(
+                          commentData.recipeID,
+                          commentData.replyingToComment,
+                          edit,
+                          commentData.id
+                        );
+                      } else {
+                        updateComment(
+                          commentData.recipeID,
+                          commentData.id,
+                          edit
+                        );
+                      }
                       setIsEditing(false);
                     }}
                     className="comment-content__interactions--button"

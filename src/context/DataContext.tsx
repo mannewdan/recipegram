@@ -217,8 +217,34 @@ export function DataContextProvider(props: { children: React.ReactNode }) {
     comment: string,
     replyID?: string
   ) {
-    if (replyID && false) {
+    if (
+      replyID &&
+      recipeData[recipeID]?.comments[commentID]?.replies[replyID]
+    ) {
       //if replyID is defined, then update the reply with that ID
+      setRecipeData((prev) => {
+        try {
+          const newData = { ...prev };
+
+          newData[recipeID].comments[commentID].replies[replyID].edited =
+            newData[recipeID].comments[commentID].replies[replyID].content !==
+            comment;
+
+          newData[recipeID].comments[commentID].replies[replyID].content =
+            comment;
+          return newData;
+        } catch {
+          console.log(
+            "Couldn't edit reply: " +
+              recipeID +
+              ", " +
+              commentID +
+              ", " +
+              replyID
+          );
+          return prev;
+        }
+      });
     } else {
       //update the comment
       setRecipeData((prev) => {
@@ -249,7 +275,6 @@ export function DataContextProvider(props: { children: React.ReactNode }) {
       recipeData[recipeID]?.comments[commentID]?.replies[replyID]
     ) {
       //if replyID is defined, then only delete the reply with that ID
-      console.log("deleting a reply");
       setRecipeData((prev) => {
         try {
           const newData = { ...prev };
