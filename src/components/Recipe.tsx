@@ -34,6 +34,7 @@ export default function Recipe({ recipe }: RecipeProps) {
     addRecipeData,
     getRecipeMetaData,
     updateRecipeLikes,
+    getComments,
   } = useDataContext();
   const [commentsOpen, setCommentsOpen] = React.useState(false);
   const [disableScroll] = useDisableScroll();
@@ -48,6 +49,15 @@ export default function Recipe({ recipe }: RecipeProps) {
   );
   const metaData = getRecipeMetaData(recipe.id);
   const likes = metaData ? metaData.likeCount : 0;
+
+  const comments = getComments(recipe.id);
+  const commentCount = comments
+    ? Object.values(comments).reduce((acc, comment) => {
+        let count = 1;
+        if (comment.replies) count += Object.values(comment.replies).length;
+        return acc + count;
+      }, 0)
+    : 0;
 
   return (
     <div key={recipe.id} className="recipe">
@@ -177,7 +187,7 @@ export default function Recipe({ recipe }: RecipeProps) {
           }}
           className="recipe__comments--view-comments"
         >
-          View 1 comment
+          View {commentCount} comment{commentCount > 1 ? "s" : ""}
         </button>
         <CommentBar recipeID={recipe.id} recipeData={recipe} />
       </div>
