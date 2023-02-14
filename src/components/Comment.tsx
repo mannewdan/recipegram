@@ -30,7 +30,7 @@ export default function Comment({ commentData, setReplyingTo }: CommentProps) {
 
   //rendering
   const likesLabel =
-    commentData.likeCount > -100
+    commentData.likeCount > 0
       ? commentData.likeCount +
         (commentData.likeCount !== 1 ? " likes" : " like")
       : "";

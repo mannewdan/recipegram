@@ -184,15 +184,17 @@ export default function Recipe({ recipe }: RecipeProps) {
 
       {/* Comment Section */}
       <div className="recipe__comments">
-        <button
-          onClick={() => {
-            setCommentsOpen(true);
-            disableScroll(true);
-          }}
-          className="recipe__comments--view-comments"
-        >
-          View {commentCount} comment{commentCount > 1 ? "s" : ""}
-        </button>
+        {commentCount > 0 && (
+          <button
+            onClick={() => {
+              setCommentsOpen(true);
+              disableScroll(true);
+            }}
+            className="recipe__comments--view-comments"
+          >
+            View {commentCount} comment{commentCount > 1 ? "s" : ""}
+          </button>
+        )}
         <CommentBar recipeID={recipe.id} recipeData={recipe} />
       </div>
     </div>
