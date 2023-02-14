@@ -1,6 +1,7 @@
 import React from "react";
 import { RecipeT } from "../components/Recipe";
 import { v4 as uuid } from "uuid";
+import dummyData from "../assets/dummyData.json";
 
 const username = "bob";
 
@@ -88,7 +89,7 @@ export function DataContextProvider(props: { children: React.ReactNode }) {
     [key: string]: RecipeDataT;
   }>(() => {
     const data = localStorage.getItem("recipe-data");
-    return data ? JSON.parse(data) : {};
+    return data ? JSON.parse(data) : dummyData;
   });
 
   console.log(recipeData);

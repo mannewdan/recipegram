@@ -232,6 +232,7 @@ img {
   -o-object-fit: cover;
      object-fit: cover;
   margin: 0;
+  border-bottom: 1px solid hsl(0deg, 0%, 55%);
 }
 
 .search-container {
