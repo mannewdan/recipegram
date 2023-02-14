@@ -7,10 +7,12 @@ const username = "bob";
 type UserDataT = {
   likes: { [key: string]: boolean };
   favorites: { [key: string]: boolean };
+  commentLikes: { [key: string]: boolean };
 };
 export enum UserDataStatus {
   Like = "likes",
   Favorite = "favorites",
+  CommentLikes = "commentLikes",
 }
 type RecipeDataT = {
   id: string;
@@ -62,6 +64,12 @@ type DataContextT = {
   getComments: (
     recipeID: string
   ) => { [key: string]: CommentDataT } | undefined;
+  modifyCommentLikes: (
+    recipeID: string,
+    commentID: string,
+    value: number,
+    replyID?: string
+  ) => void;
 };
 
 const Context = React.createContext({} as DataContextT);
@@ -95,6 +103,7 @@ export function DataContextProvider(props: { children: React.ReactNode }) {
     id: string,
     whichStatus: UserDataStatus
   ): boolean {
+    if (!userData[whichStatus]) userData[whichStatus] = {};
     if (userData[whichStatus][id]) {
       setUserData((prev: UserDataT) => {
         const newData = { ...prev };
@@ -115,7 +124,11 @@ export function DataContextProvider(props: { children: React.ReactNode }) {
     id: string,
     whichStatus: UserDataStatus
   ): boolean {
-    return !!userData[whichStatus][id];
+    try {
+      return !!userData[whichStatus][id];
+    } catch {
+      return false;
+    }
   }
   function addRecipeData(recipe: RecipeT, liked: boolean = false): boolean {
     if (recipeData[recipe.id]) return false;
@@ -322,6 +335,61 @@ export function DataContextProvider(props: { children: React.ReactNode }) {
     const recipeMetaData = getRecipeMetaData(recipeID);
     return recipeMetaData?.comments;
   }
+  function modifyCommentLikes(
+    recipeID: string,
+    commentID: string,
+    value: number,
+    replyID?: string
+  ) {
+    console.log(value);
+
+    if (
+      replyID &&
+      recipeData[recipeID]?.comments[commentID]?.replies[replyID]
+    ) {
+      //update the reply
+      setRecipeData((prev) => {
+        return {
+          ...prev,
+          [recipeID]: {
+            ...prev[recipeID],
+            comments: {
+              ...prev[recipeID].comments,
+              [commentID]: {
+                ...prev[recipeID].comments[commentID],
+                replies: {
+                  ...prev[recipeID].comments[commentID].replies,
+                  [replyID]: {
+                    ...prev[recipeID].comments[commentID].replies[replyID],
+                    likeCount:
+                      prev[recipeID].comments[commentID].replies[replyID]
+                        .likeCount + value,
+                  },
+                },
+              },
+            },
+          },
+        };
+      });
+    } else {
+      //update the comment
+      setRecipeData((prev) => {
+        return {
+          ...prev,
+          [recipeID]: {
+            ...prev[recipeID],
+            comments: {
+              ...prev[recipeID].comments,
+              [commentID]: {
+                ...prev[recipeID].comments[commentID],
+                likeCount: prev[recipeID].comments[commentID].likeCount + value,
+              },
+            },
+          },
+        };
+      });
+    }
+  }
 
   //save
   React.useEffect(() => {
@@ -345,6 +413,7 @@ export function DataContextProvider(props: { children: React.ReactNode }) {
         updateComment,
         deleteComment,
         getComments,
+        modifyCommentLikes,
       }}
     >
       {props.children}

@@ -1,7 +1,7 @@
 import React from "react";
 import { CommentDataT } from "../context/DataContext";
 import ReactTimeAgo from "react-time-ago";
-import { useDataContext } from "../context/DataContext";
+import { useDataContext, UserDataStatus } from "../context/DataContext";
 
 type CommentProps = {
   commentData: CommentDataT;
@@ -13,14 +13,26 @@ export default function Comment({ commentData, setReplyingTo }: CommentProps) {
   const [isEditing, setIsEditing] = React.useState(false);
   const [edit, setEdit] = React.useState("");
   const [isDeleting, setIsDeleting] = React.useState(false);
-  const { getCurrentUser, updateComment, deleteComment } = useDataContext();
+  const {
+    toggleUserRecipeStatus,
+    isUserRecipeStatusPositive,
+    getCurrentUser,
+    updateComment,
+    deleteComment,
+    modifyCommentLikes,
+  } = useDataContext();
 
   const isUser = commentData.userID === getCurrentUser();
+  const isLiked = isUserRecipeStatusPositive(
+    commentData.id,
+    UserDataStatus.CommentLikes
+  );
 
   //rendering
   const likesLabel =
-    commentData.likeCount > 0
-      ? commentData.likeCount + (commentData.likeCount > 1 ? " likes" : " like")
+    commentData.likeCount > -100
+      ? commentData.likeCount +
+        (commentData.likeCount !== 1 ? " likes" : " like")
       : "";
 
   const replyEls = commentData.replies
@@ -178,7 +190,7 @@ export default function Comment({ commentData, setReplyingTo }: CommentProps) {
               </button>
 
               {/* Likes */}
-              {commentData.likeCount > 0 && (
+              {likesLabel && (
                 <span className="comment-content__interactions--likes">
                   {likesLabel}
                 </span>
@@ -222,17 +234,37 @@ export default function Comment({ commentData, setReplyingTo }: CommentProps) {
         <div className="comment-like">
           <button
             onClick={() => {
-              return;
+              const liked = toggleUserRecipeStatus(
+                commentData.id,
+                UserDataStatus.CommentLikes
+              );
+
+              if (commentData.replyingToComment) {
+                modifyCommentLikes(
+                  commentData.recipeID,
+                  commentData.replyingToComment,
+                  liked ? 1 : -1,
+                  commentData.id
+                );
+              } else {
+                modifyCommentLikes(
+                  commentData.recipeID,
+                  commentData.id,
+                  liked ? 1 : -1
+                );
+              }
             }}
             className="icon-button"
           >
             <i
               className={`icon fa-regular fa-heart ${
-                !true ? "instant small" : ""
+                !isLiked ? "instant small" : ""
               }`}
             ></i>
             <i
-              className={`icon fa-solid fa-heart ${true ? "pulse small" : ""}`}
+              className={`icon fa-solid fa-heart ${
+                isLiked ? "pulse small" : ""
+              }`}
             ></i>
           </button>
         </div>
