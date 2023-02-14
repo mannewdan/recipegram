@@ -106,7 +106,7 @@ export function DataContextProvider(props: { children: React.ReactNode }) {
     if (!userData[whichStatus]) userData[whichStatus] = {};
     if (userData[whichStatus][id]) {
       setUserData((prev: UserDataT) => {
-        const newData = { ...prev };
+        const newData = { ...prev, [whichStatus]: { ...prev[whichStatus] } };
         delete newData[whichStatus][id];
         return newData;
       });
@@ -124,11 +124,7 @@ export function DataContextProvider(props: { children: React.ReactNode }) {
     id: string,
     whichStatus: UserDataStatus
   ): boolean {
-    try {
-      return !!userData[whichStatus][id];
-    } catch {
-      return false;
-    }
+    return userData[whichStatus] && !!userData[whichStatus][id];
   }
   function addRecipeData(recipe: RecipeT, liked: boolean = false): boolean {
     if (recipeData[recipe.id]) return false;
@@ -193,19 +189,22 @@ export function DataContextProvider(props: { children: React.ReactNode }) {
 
       //save reply
       setRecipeData((prev) => {
-        try {
-          const newData = { ...prev };
-
-          newData[recipeID].comments[replyingTo.id].replies[newReply.id] =
-            newReply;
-
-          return newData;
-        } catch {
-          console.log(
-            "Failed to post reply to: " + recipeID + " " + replyingTo.id
-          );
-          return prev;
-        }
+        return {
+          ...prev,
+          [recipeID]: {
+            ...prev[recipeID],
+            comments: {
+              ...prev[recipeID].comments,
+              [replyingTo.id]: {
+                ...prev[recipeID].comments[replyingTo.id],
+                replies: {
+                  ...prev[recipeID].comments[replyingTo.id].replies,
+                  [newReply.id]: newReply,
+                },
+              },
+            },
+          },
+        };
       });
     } else {
       //create comment
@@ -221,14 +220,16 @@ export function DataContextProvider(props: { children: React.ReactNode }) {
 
       //save comment
       setRecipeData((prev) => {
-        try {
-          const newData = { ...prev };
-          newData[recipeID].comments[newComment.id] = newComment;
-          return newData;
-        } catch {
-          console.log("Failed to post comment to: " + recipeID);
-          return prev;
-        }
+        return {
+          ...prev,
+          [recipeID]: {
+            ...prev[recipeID],
+            comments: {
+              ...prev[recipeID].comments,
+              [newComment.id]: newComment,
+            },
+          },
+        };
       });
     }
   }
@@ -244,45 +245,50 @@ export function DataContextProvider(props: { children: React.ReactNode }) {
     ) {
       //if replyID is defined, then update the reply with that ID
       setRecipeData((prev) => {
-        try {
-          const newData = { ...prev };
+        const edited =
+          prev[recipeID].comments[commentID].replies[replyID].content !==
+          comment;
 
-          newData[recipeID].comments[commentID].replies[replyID].edited =
-            newData[recipeID].comments[commentID].replies[replyID].content !==
-            comment;
-
-          newData[recipeID].comments[commentID].replies[replyID].content =
-            comment;
-          return newData;
-        } catch {
-          console.log(
-            "Couldn't edit reply: " +
-              recipeID +
-              ", " +
-              commentID +
-              ", " +
-              replyID
-          );
-          return prev;
-        }
+        return {
+          ...prev,
+          [recipeID]: {
+            ...prev[recipeID],
+            comments: {
+              ...prev[recipeID].comments,
+              [commentID]: {
+                ...prev[recipeID].comments[commentID],
+                replies: {
+                  ...prev[recipeID].comments[commentID].replies,
+                  [replyID]: {
+                    ...prev[recipeID].comments[commentID].replies[replyID],
+                    content: comment,
+                    edited,
+                  },
+                },
+              },
+            },
+          },
+        };
       });
     } else {
       //update the comment
       setRecipeData((prev) => {
-        try {
-          const newData = { ...prev };
+        const edited = prev[recipeID].comments[commentID].content !== comment;
 
-          newData[recipeID].comments[commentID].edited =
-            newData[recipeID].comments[commentID].content !== comment;
-
-          newData[recipeID].comments[commentID].content = comment;
-          return newData;
-        } catch {
-          console.log(
-            "Failed to update comment: " + recipeID + ", " + commentID
-          );
-          return prev;
-        }
+        return {
+          ...prev,
+          [recipeID]: {
+            ...prev[recipeID],
+            comments: {
+              ...prev[recipeID].comments,
+              [commentID]: {
+                ...prev[recipeID].comments[commentID],
+                content: comment,
+                edited,
+              },
+            },
+          },
+        };
       });
     }
   }
@@ -297,35 +303,38 @@ export function DataContextProvider(props: { children: React.ReactNode }) {
     ) {
       //if replyID is defined, then only delete the reply with that ID
       setRecipeData((prev) => {
-        try {
-          const newData = { ...prev };
-          delete newData[recipeID].comments[commentID].replies[replyID];
-          return newData;
-        } catch {
-          console.log(
-            "Failed to delete reply: " +
-              recipeID +
-              ", " +
-              commentID +
-              ", " +
-              replyID
-          );
-          return prev;
-        }
+        const newData = {
+          ...prev,
+          [recipeID]: {
+            ...prev[recipeID],
+            comments: {
+              ...prev[recipeID].comments,
+              [commentID]: {
+                ...prev[recipeID].comments[commentID],
+                replies: {
+                  ...prev[recipeID].comments[commentID].replies,
+                },
+              },
+            },
+          },
+        };
+        delete newData[recipeID].comments[commentID].replies[replyID];
+        return newData;
       });
     } else {
       //delete the comment, including all replies
       setRecipeData((prev) => {
-        try {
-          const newData = { ...prev };
-          delete newData[recipeID].comments[commentID];
-          return newData;
-        } catch {
-          console.log(
-            "Failed to delete comment: " + recipeID + ", " + commentID
-          );
-          return prev;
-        }
+        const newData = {
+          ...prev,
+          [recipeID]: {
+            ...prev[recipeID],
+            comments: {
+              ...prev[recipeID].comments,
+            },
+          },
+        };
+        delete newData[recipeID].comments[commentID];
+        return newData;
       });
     }
   }
@@ -341,8 +350,6 @@ export function DataContextProvider(props: { children: React.ReactNode }) {
     value: number,
     replyID?: string
   ) {
-    console.log(value);
-
     if (
       replyID &&
       recipeData[recipeID]?.comments[commentID]?.replies[replyID]
