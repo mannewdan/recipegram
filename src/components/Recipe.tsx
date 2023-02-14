@@ -71,10 +71,12 @@ export default function Recipe({ recipe }: RecipeProps) {
         />
       )}
 
+      {/* Title */}
       <div className="recipe__title">
         <h3>{recipe.name}</h3>
       </div>
 
+      {/* Image */}
       <div className="img-container">
         <img src={recipe.imageURL}></img>
 
@@ -95,6 +97,7 @@ export default function Recipe({ recipe }: RecipeProps) {
         )}
       </div>
 
+      {/* Recipe Info */}
       <div className="recipe__details">
         <div>
           <div className="recipe__details--top">
@@ -179,6 +182,7 @@ export default function Recipe({ recipe }: RecipeProps) {
         </div>
       </div>
 
+      {/* Comment Section */}
       <div className="recipe__comments">
         <button
           onClick={() => {

@@ -1,0 +1,13 @@
+@mixin animation-pulse($animation-name, $property, $size-rem) {
+  @keyframes #{$animation-name} {
+    0% {
+      #{$property}: #{$size-rem * 0.85}rem;
+    }
+    50% {
+      #{$property}: #{$size-rem * 1.25}rem;
+    }
+    100% {
+      #{$property}: #{$size-rem}rem;
+    }
+  }
+}

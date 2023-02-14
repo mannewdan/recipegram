@@ -218,7 +218,25 @@ export default function Comment({ commentData, setReplyingTo }: CommentProps) {
       </div>
 
       {/* Like Button */}
-      {!isEditing && <div className="comment-like">{"<3"}</div>}
+      {!isEditing && (
+        <div className="comment-like">
+          <button
+            onClick={() => {
+              return;
+            }}
+            className="icon-button"
+          >
+            <i
+              className={`icon fa-regular fa-heart ${
+                !true ? "instant small" : ""
+              }`}
+            ></i>
+            <i
+              className={`icon fa-solid fa-heart ${true ? "pulse small" : ""}`}
+            ></i>
+          </button>
+        </div>
+      )}
     </div>
   );
 }

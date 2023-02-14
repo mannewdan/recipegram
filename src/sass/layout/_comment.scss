@@ -6,6 +6,7 @@
 
   margin: 0.5em 0;
   padding-bottom: 1em;
+  padding-right: 30px;
 
   border-bottom: 1px solid darken($white-gray, 5%);
   &:last-of-type {
@@ -113,7 +114,6 @@
   }
 }
 .comment-like {
-  margin-top: 8px;
-  margin-left: 8px;
+  width: 0;
   align-self: start;
 }

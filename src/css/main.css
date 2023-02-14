@@ -77,11 +77,17 @@ img {
 .icon.instant {
   font-size: 1.75rem;
 }
+.icon.instant.small {
+  font-size: 1.15rem;
+}
 .icon.pulse {
   animation-name: pulse;
   animation-duration: 150ms;
   animation-fill-mode: forwards;
   animation-timing-function: ease-out;
+}
+.icon.pulse.small {
+  animation-name: pulse-small;
 }
 .icon.fa-solid.fa-star {
   color: hsl(40deg, 100%, 60%);
@@ -92,13 +98,24 @@ img {
 
 @keyframes pulse {
   0% {
-    font-size: 1.5rem;
+    font-size: 1.4875rem;
   }
   50% {
-    font-size: 2.25rem;
+    font-size: 2.1875rem;
   }
   100% {
     font-size: 1.75rem;
+  }
+}
+@keyframes pulse-small {
+  0% {
+    font-size: 0.9775rem;
+  }
+  50% {
+    font-size: 1.4375rem;
+  }
+  100% {
+    font-size: 1.15rem;
   }
 }
 .unselectable {
@@ -465,6 +482,7 @@ footer a {
   justify-content: space-between;
   margin: 0.5em 0;
   padding-bottom: 1em;
+  padding-right: 30px;
   border-bottom: 1px solid #ebebeb;
 }
 .comment-container:last-of-type {
@@ -563,8 +581,7 @@ footer a {
 }
 
 .comment-like {
-  margin-top: 8px;
-  margin-left: 8px;
+  width: 0;
   align-self: start;
 }
 
