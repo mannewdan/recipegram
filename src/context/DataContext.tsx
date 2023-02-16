@@ -15,7 +15,7 @@ export enum UserDataStatus {
   Favorite = "favorites",
   CommentLikes = "commentLikes",
 }
-type RecipeDataT = {
+export type RecipeDataT = {
   id: string;
   recipe: RecipeT;
   likeCount: number;
@@ -44,6 +44,7 @@ type DataContextT = {
   addRecipeData: (recipe: RecipeT, liked?: boolean) => boolean;
   updateRecipeLikes: (recipe: RecipeT, change: number) => void;
   getFavoriteRecipes: () => Array<RecipeT>;
+  getAllRecipes: () => Array<RecipeT>;
   getRecipeMetaData: (id: string) => RecipeDataT;
   postComment: (
     userID: string,
@@ -149,6 +150,9 @@ export function DataContextProvider(props: { children: React.ReactNode }) {
     return Object.keys(userData.favorites).map((id) => {
       return recipeData[id].recipe;
     }) as RecipeT[];
+  }
+  function getAllRecipes(): Array<RecipeT> {
+    return Object.values(recipeData).map((data) => data.recipe);
   }
   function getRecipeMetaData(id: string): RecipeDataT {
     return recipeData[id];
@@ -417,6 +421,7 @@ export function DataContextProvider(props: { children: React.ReactNode }) {
         getRecipeMetaData,
         updateRecipeLikes,
         getFavoriteRecipes,
+        getAllRecipes,
         postComment,
         updateComment,
         deleteComment,

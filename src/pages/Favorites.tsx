@@ -4,7 +4,7 @@ import { useDataContext } from "../context/DataContext";
 
 export default function Favorites() {
   const { getRecipeMetaData, getFavoriteRecipes } = useDataContext();
-  const [recipes, setRecipes] = React.useState(getFavoriteRecipes());
+  const [recipes] = React.useState(getFavoriteRecipes());
 
   //scroll to top
   React.useEffect(() => {
