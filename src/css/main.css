@@ -184,6 +184,7 @@ img {
   display: flex;
   flex-direction: column;
   padding: 0 10px;
+  margin-bottom: 16px;
   gap: 10px;
 }
 .recipe__details--top {
@@ -210,7 +211,7 @@ img {
   background-color: transparent;
   color: hsl(0deg, 0%, 85%);
   cursor: pointer;
-  margin: 1em 0.5em;
+  margin: 0 0.5em 1em 0.5em;
 }
 
 .recipe-simplified {
@@ -513,9 +514,8 @@ footer a {
   margin-right: 6px;
 }
 .comment-content__comment--replying-to {
-  background-color: #778aeb;
-  color: hsl(0deg, 0%, 100%);
-  padding: 2px 4px 2px 3px;
+  color: #778aeb;
+  padding: 2px;
   margin-right: 3px;
   border-radius: 4px;
 }

@@ -38,9 +38,8 @@
   }
   &__comment {
     &--replying-to {
-      background-color: $accent-light;
-      color: $white;
-      padding: 2px 4px 2px 3px;
+      color: $accent-light;
+      padding: 2px;
       margin-right: 3px;
       border-radius: 4px;
     }
