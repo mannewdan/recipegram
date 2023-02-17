@@ -7,8 +7,17 @@ const username = "bob";
 
 type UserDataT = {
   likes: { [key: string]: boolean };
+  comments: { [key: string]: string };
   favorites: { [key: string]: boolean };
   commentLikes: { [key: string]: boolean };
+};
+type InteractionDataT = {
+  liked: boolean;
+  comments: number;
+};
+type HistoryDataT = {
+  recipe: RecipeT;
+  interactions: InteractionDataT;
 };
 export enum UserDataStatus {
   Like = "likes",
@@ -45,7 +54,12 @@ type DataContextT = {
   updateRecipeLikes: (recipe: RecipeT, change: number) => void;
   getFavoriteRecipes: () => Array<RecipeT>;
   getAllRecipes: () => Array<RecipeT>;
-  getUserHistoryRecipes: () => Array<RecipeT>;
+  getUserHistoryRecipes: () => {
+    [key: string]: {
+      recipe: RecipeT;
+      interactions: { liked: boolean; comments: number };
+    };
+  };
   getRecipeMetaData: (id: string) => RecipeDataT;
   postComment: (
     userID: string,
@@ -85,7 +99,12 @@ export function DataContextProvider(props: { children: React.ReactNode }) {
     const data = localStorage.getItem("user-data");
     return data
       ? JSON.parse(data)
-      : ({ likes: {}, favorites: {} } as UserDataT);
+      : ({
+          likes: {},
+          comments: {},
+          favorites: {},
+          commentLikes: {},
+        } as UserDataT);
   });
   const [recipeData, setRecipeData] = React.useState<{
     [key: string]: RecipeDataT;
@@ -94,7 +113,7 @@ export function DataContextProvider(props: { children: React.ReactNode }) {
     return data ? JSON.parse(data) : dummyData;
   });
 
-  console.log(recipeData);
+  console.log(userData);
 
   //meta functions
   function getCurrentUser(): string {
@@ -155,10 +174,26 @@ export function DataContextProvider(props: { children: React.ReactNode }) {
   function getAllRecipes(): Array<RecipeT> {
     return Object.values(recipeData).map((data) => data.recipe);
   }
-  function getUserHistoryRecipes(): Array<RecipeT> {
-    return Object.keys(userData.likes).map((id) => {
-      return recipeData[id].recipe;
-    }) as RecipeT[];
+  function getUserHistoryRecipes(): { [key: string]: HistoryDataT } {
+    const data = {} as { [key: string]: HistoryDataT };
+    const makeHistory = (recipeID: string): HistoryDataT => {
+      const meta = getRecipeMetaData(recipeID);
+      return {
+        recipe: meta.recipe,
+        interactions: { liked: false, comments: 0 },
+      };
+    };
+
+    Object.keys(userData.likes).forEach((id) => {
+      if (!data[id]) data[id] = makeHistory(id);
+      data[id].interactions.liked = true;
+    });
+    Object.values<string>(userData.comments).forEach((id) => {
+      if (!data[id]) data[id] = makeHistory(id);
+      data[id].interactions.comments++;
+    });
+
+    return data;
   }
   function getRecipeMetaData(id: string): RecipeDataT {
     return recipeData[id];
@@ -184,10 +219,22 @@ export function DataContextProvider(props: { children: React.ReactNode }) {
     comment: string,
     replyingTo?: { id: string; user: string }
   ) {
+    const id = uuid();
+    //save to userdata
+    setUserData((prev: UserDataT) => {
+      return {
+        ...prev,
+        comments: {
+          ...prev.comments,
+          [id]: recipeID,
+        },
+      };
+    });
+
     if (replyingTo && recipeData[recipeID]?.comments[replyingTo.id]) {
       //create reply
       const newReply = {
-        id: uuid(),
+        id,
         recipeID,
         userID,
         content: comment,
@@ -220,7 +267,7 @@ export function DataContextProvider(props: { children: React.ReactNode }) {
     } else {
       //create comment
       const newComment = {
-        id: uuid(),
+        id,
         recipeID,
         userID,
         content: comment,
@@ -308,6 +355,13 @@ export function DataContextProvider(props: { children: React.ReactNode }) {
     commentID: string,
     replyID?: string
   ) {
+    //remove from userdata
+    setUserData((prev: UserDataT) => {
+      const newData = { ...prev, comments: { ...prev.comments } };
+      delete newData.comments[replyID ? replyID : commentID];
+      return newData;
+    });
+
     if (
       replyID &&
       recipeData[recipeID]?.comments[commentID]?.replies[replyID]
