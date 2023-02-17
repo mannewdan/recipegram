@@ -8,7 +8,7 @@ const username = "bob";
 type UserDataT = {
   likes: { [key: string]: boolean };
   comments: { [key: string]: string };
-  favorites: { [key: string]: boolean };
+  favorites: { [key: string]: Date };
   commentLikes: { [key: string]: boolean };
 };
 type InteractionDataT = {
@@ -52,7 +52,7 @@ type DataContextT = {
   ) => boolean;
   addRecipeData: (recipe: RecipeT, liked?: boolean) => boolean;
   updateRecipeLikes: (recipe: RecipeT, change: number) => void;
-  getFavoriteRecipes: () => Array<RecipeT>;
+  getFavoriteRecipes: () => Array<RecipeDataT>;
   getAllRecipes: () => Array<RecipeT>;
   getUserHistoryRecipes: () => {
     [key: string]: {
@@ -136,7 +136,13 @@ export function DataContextProvider(props: { children: React.ReactNode }) {
       return false;
     } else {
       setUserData((prev: UserDataT) => {
-        return { ...prev, [whichStatus]: { ...prev[whichStatus], [id]: true } };
+        return {
+          ...prev,
+          [whichStatus]: {
+            ...prev[whichStatus],
+            [id]: whichStatus === UserDataStatus.Favorite ? new Date() : true,
+          },
+        };
       });
 
       return true;
@@ -166,10 +172,13 @@ export function DataContextProvider(props: { children: React.ReactNode }) {
 
     return true;
   }
-  function getFavoriteRecipes(): Array<RecipeT> {
+  function getFavoriteRecipes(): Array<RecipeDataT> {
     return Object.keys(userData.favorites).map((id) => {
-      return recipeData[id].recipe;
-    }) as RecipeT[];
+      return {
+        ...recipeData[id],
+        lastInteraction: userData.favorites[id],
+      };
+    }) as RecipeDataT[];
   }
   function getAllRecipes(): Array<RecipeT> {
     return Object.values(recipeData).map((data) => data.recipe);

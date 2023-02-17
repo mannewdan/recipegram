@@ -3,7 +3,7 @@ import Recipe from "../components/Recipe";
 import { useDataContext } from "../context/DataContext";
 
 export default function Favorites() {
-  const { getRecipeMetaData, getFavoriteRecipes } = useDataContext();
+  const { getFavoriteRecipes } = useDataContext();
   const [recipes] = React.useState(getFavoriteRecipes().reverse());
 
   //scroll to top
@@ -13,17 +13,14 @@ export default function Favorites() {
 
   let previousDate = undefined as string | undefined;
   const recipeEls = recipes.map((recipe) => {
-    const metaData = getRecipeMetaData(recipe.id);
-    const newDate = metaData
-      ? new Date(metaData.lastInteraction).toDateString()
-      : undefined;
+    const newDate = new Date(recipe.lastInteraction).toDateString();
 
     const el = (
       <section key={recipe.id} className="favorites__item">
         {newDate && newDate !== previousDate && (
           <span className="favorites__item--time">{newDate}</span>
         )}
-        <Recipe recipe={recipe} />
+        <Recipe recipe={recipe.recipe} />
       </section>
     );
 
