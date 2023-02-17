@@ -45,6 +45,7 @@ type DataContextT = {
   updateRecipeLikes: (recipe: RecipeT, change: number) => void;
   getFavoriteRecipes: () => Array<RecipeT>;
   getAllRecipes: () => Array<RecipeT>;
+  getUserHistoryRecipes: () => Array<RecipeT>;
   getRecipeMetaData: (id: string) => RecipeDataT;
   postComment: (
     userID: string,
@@ -153,6 +154,11 @@ export function DataContextProvider(props: { children: React.ReactNode }) {
   }
   function getAllRecipes(): Array<RecipeT> {
     return Object.values(recipeData).map((data) => data.recipe);
+  }
+  function getUserHistoryRecipes(): Array<RecipeT> {
+    return Object.keys(userData.likes).map((id) => {
+      return recipeData[id].recipe;
+    }) as RecipeT[];
   }
   function getRecipeMetaData(id: string): RecipeDataT {
     return recipeData[id];
@@ -422,6 +428,7 @@ export function DataContextProvider(props: { children: React.ReactNode }) {
         updateRecipeLikes,
         getFavoriteRecipes,
         getAllRecipes,
+        getUserHistoryRecipes,
         postComment,
         updateComment,
         deleteComment,

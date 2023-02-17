@@ -1,0 +1,15 @@
+@use "../globals/themes" as *;
+
+.history {
+  &__item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  &__description {
+    font-weight: 700;
+    color: $accent-light;
+    margin-bottom: 0.5em;
+  }
+}

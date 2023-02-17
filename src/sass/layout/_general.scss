@@ -1,0 +1,25 @@
+@use "../globals/themes" as *;
+@use "../globals/sizes" as *;
+
+.general {
+  &__header {
+    background-color: $accent;
+    color: $white;
+    padding: 12px;
+
+    h3 {
+      font-size: 2rem;
+      text-align: center;
+    }
+  }
+  &__empty {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: calc(100vh - $search-height - $footer-height);
+
+    font-size: 1.25rem;
+    color: $gray;
+  }
+}
