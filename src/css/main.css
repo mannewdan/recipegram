@@ -632,6 +632,38 @@ footer a {
   color: hsl(0deg, 0%, 18%);
 }
 
+.feed {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.feed__sort-mode {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5em;
+  margin-top: 1.5em;
+  border-radius: 6px;
+}
+.feed__sort-mode label {
+  font-weight: 700;
+}
+.feed__sort-mode select {
+  min-width: 85px;
+  padding: 0.2em;
+  margin-left: -4px;
+  outline: none;
+  background-color: #778aeb;
+  border-radius: 6px;
+  border-color: hsl(0deg, 0%, 55%);
+  color: hsl(0deg, 0%, 100%);
+  font-weight: 700;
+}
+.feed__sort-mode select option {
+  background-color: hsl(0deg, 0%, 100%);
+  color: hsl(0deg, 0%, 18%);
+}
+
 .root-container {
   display: flex;
 }

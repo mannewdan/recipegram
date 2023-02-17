@@ -1,0 +1,39 @@
+@use "../globals/themes" as *;
+
+.feed {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__sort-mode {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5em;
+
+    margin-top: 1.5em;
+    border-radius: 6px;
+
+    label {
+      font-weight: 700;
+    }
+    select {
+      min-width: 85px;
+      padding: 0.2em;
+      margin-left: -4px;
+      outline: none;
+
+      background-color: $accent-light;
+      border-radius: 6px;
+      border-color: $dark-gray;
+
+      color: $white;
+      font-weight: 700;
+
+      option {
+        background-color: $white;
+        color: $black;
+      }
+    }
+  }
+}

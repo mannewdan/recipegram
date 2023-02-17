@@ -18,7 +18,7 @@ function App() {
         <div className="main-container">
           <main>
             <Routes>
-              <Route path="/" element={<Feed />}></Route>
+              <Route path="/" element={<Feed search={search} />}></Route>
               <Route
                 path="/search"
                 element={
