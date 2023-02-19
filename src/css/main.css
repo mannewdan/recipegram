@@ -495,9 +495,22 @@ footer a {
   max-height: calc(100vh - 40px);
   max-width: 150vh;
   min-height: 66vh;
+  min-width: 50%;
   z-index: 10001;
   background-color: hsl(0deg, 0%, 100%);
   border-radius: 3px;
+}
+@media (max-height: 400px), (max-width: 800px) {
+  .comments {
+    width: calc(100vw - 120px);
+    margin-right: 8px;
+  }
+}
+@media (max-width: 600px) {
+  .comments {
+    width: calc(100vw - 80px);
+    margin-right: 8px;
+  }
 }
 .comments__title {
   display: flex;
@@ -517,8 +530,18 @@ footer a {
   width: 45%;
   min-width: 300px;
 }
+@media (max-width: 800px), (max-height: 400px) {
+  .comments__recipe-section {
+    display: none;
+  }
+}
 .comments__posts-section {
   width: 55%;
+}
+@media (max-width: 800px), (max-height: 400px) {
+  .comments__posts-section {
+    width: 100%;
+  }
 }
 .comments__posts-container {
   display: flex;
