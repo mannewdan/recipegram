@@ -1,6 +1,7 @@
 @use "globals";
 @use "layout";
 @use "./globals/sizes" as *;
+@use "./globals/breakpoints.scss" as *;
 
 .root-container {
   display: flex;
@@ -9,6 +10,10 @@
   width: 100%;
   display: flex;
   flex-direction: column;
+
+  @media (max-width: $bp-small) {
+    margin-bottom: $sidebar-small-height;
+  }
 }
 main {
   width: 100%;

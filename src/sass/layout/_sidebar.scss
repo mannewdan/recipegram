@@ -84,3 +84,32 @@
     }
   }
 }
+
+@media (max-width: $bp-small) {
+  .sidebar-container {
+    min-width: 0;
+  }
+  .sidebar {
+    width: 100%;
+    height: $sidebar-small-height;
+    bottom: 0;
+    border-top: 1px solid $gray;
+
+    &__link-container {
+      flex-direction: row;
+      gap: 10px;
+    }
+    &__link {
+      justify-content: center;
+
+      &.active {
+        color: $white;
+        background-color: $accent-light;
+        text-shadow: 0 0 4px hsl(0, 0%, 0%, 50%);
+        i {
+          font-size: 1.85rem;
+        }
+      }
+    }
+  }
+}

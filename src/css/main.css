@@ -17,6 +17,12 @@
   font-weight: 400;
   color: hsl(0deg, 0%, 18%);
   font-size: 14px;
+  overflow-y: scroll;
+}
+@media (max-width: 400px) {
+  :root {
+    font-size: 12px;
+  }
 }
 
 button,
@@ -146,7 +152,7 @@ img {
   align-items: center;
   max-width: 500px;
   margin: 16px auto 0 auto;
-  padding: 0 10px;
+  padding: 0 16px;
 }
 
 .img-container {
@@ -271,6 +277,11 @@ img {
   background-color: #546de5;
   z-index: 100;
 }
+@media (max-width: 600px) {
+  .search {
+    width: calc(100vw - 17px);
+  }
+}
 .search h1 {
   color: hsl(0deg, 0%, 100%);
   text-shadow: 0 0 3px hsl(0deg, 0%, 18%);
@@ -290,6 +301,11 @@ img {
 }
 .search__bar input {
   width: 50%;
+}
+@media (max-width: 400px) {
+  .search__bar input {
+    font-size: 0.9rem;
+  }
 }
 .search__bar input:focus {
   outline: none;
@@ -410,6 +426,32 @@ footer a {
   .sidebar__link--icon-holder {
     margin: 0;
     width: 10px;
+  }
+}
+@media (max-width: 600px) {
+  .sidebar-container {
+    min-width: 0;
+  }
+  .sidebar {
+    width: 100%;
+    height: 70px;
+    bottom: 0;
+    border-top: 1px solid hsl(0deg, 0%, 85%);
+  }
+  .sidebar__link-container {
+    flex-direction: row;
+    gap: 10px;
+  }
+  .sidebar__link {
+    justify-content: center;
+  }
+  .sidebar__link.active {
+    color: hsl(0deg, 0%, 100%);
+    background-color: #778aeb;
+    text-shadow: 0 0 4px hsla(0deg, 0%, 0%, 0.5);
+  }
+  .sidebar__link.active i {
+    font-size: 1.85rem;
   }
 }
 .comments-container {
@@ -708,6 +750,11 @@ footer a {
   width: 100%;
   display: flex;
   flex-direction: column;
+}
+@media (max-width: 600px) {
+  .main-container {
+    margin-bottom: 70px;
+  }
 }
 
 main {
