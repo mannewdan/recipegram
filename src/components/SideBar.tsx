@@ -21,7 +21,7 @@ export default function SideBar() {
             <div className="sidebar__link--icon-holder">
               <i className="fa-solid fa-house"></i>
             </div>
-            <span>Home</span>
+            <span className="sidebar__link--text">Home</span>
           </Link>
           <Link
             className={`sidebar__link ${path === "/search" ? "active" : ""}`}
@@ -30,7 +30,7 @@ export default function SideBar() {
             <div className="sidebar__link--icon-holder">
               <i className="fa-solid fa-magnifying-glass"></i>
             </div>
-            <span>Search</span>
+            <span className="sidebar__link--text">Search</span>
           </Link>
           <Link
             className={`sidebar__link ${path === "/favorites" ? "active" : ""}`}
@@ -39,7 +39,7 @@ export default function SideBar() {
             <div className="sidebar__link--icon-holder">
               <i className="fa-solid fa-star"></i>
             </div>
-            <span>My Favorites</span>
+            <span className="sidebar__link--text">My Favorites</span>
           </Link>
           <Link
             className={`sidebar__link ${path === "/history" ? "active" : ""}`}
@@ -48,7 +48,7 @@ export default function SideBar() {
             <div className="sidebar__link--icon-holder">
               <i className="fa-solid fa-book"></i>
             </div>
-            <span>My History</span>
+            <span className="sidebar__link--text">My History</span>
           </Link>
         </div>
       </nav>

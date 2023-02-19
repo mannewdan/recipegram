@@ -1,4 +1,16 @@
+@use "../globals/breakpoints.scss" as *;
+
+//static sizes
 $search-height: 135px;
 $footer-height: 50px;
-$sidebar-width: 250px;
 $comment-bar-height: 50px;
+
+//variable sizes
+:root {
+  --sidebar-width: 220px;
+}
+@media (max-width: $bp-medium) {
+  :root {
+    --sidebar-width: 80px;
+  }
+}

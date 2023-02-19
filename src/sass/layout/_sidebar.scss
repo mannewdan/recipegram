@@ -1,14 +1,14 @@
 @use "../globals/themes" as *;
 @use "../globals/sizes" as *;
+@use "../globals/breakpoints" as *;
 
 .sidebar-container {
   position: relative;
-  max-width: $sidebar-width;
-  min-width: $sidebar-width;
+  min-width: var(--sidebar-width);
 }
 .sidebar {
   position: fixed;
-  width: $sidebar-width;
+  width: var(--sidebar-width);
   height: 100vh;
   padding: 10px 16px;
   z-index: 1000;
@@ -27,6 +27,8 @@
   &__link {
     display: flex;
     align-items: center;
+    width: 100%;
+    height: calc(1.15rem + 32px);
     padding: 16px 20px;
 
     font-size: 1.15rem;
@@ -61,6 +63,23 @@
       text-shadow: 0 0 4px hsl(0, 0%, 0%, 50%);
       i {
         font-size: 1.85rem;
+      }
+    }
+  }
+}
+
+@media (max-width: $bp-medium) {
+  .sidebar {
+    &__logo-container {
+      display: none;
+    }
+    &__link {
+      &--text {
+        display: none;
+      }
+      &--icon-holder {
+        margin: 0;
+        width: 10px;
       }
     }
   }
