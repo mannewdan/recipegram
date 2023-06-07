@@ -39,7 +39,7 @@ export default function Comment({ commentData, setReplyingTo }: CommentProps) {
     ? (() => {
         const values = Object.values(commentData.replies);
         const els = [];
-        for (let i = values.length - 1; i >= 0; i--) {
+        for (let i = 0; i < values.length; i++) {
           els.push(
             <Comment
               key={values[i].id}
